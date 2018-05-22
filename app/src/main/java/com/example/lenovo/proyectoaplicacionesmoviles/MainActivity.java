@@ -1,6 +1,7 @@
 package com.example.lenovo.proyectoaplicacionesmoviles;
 
 import android.content.res.Configuration;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 import com.example.lenovo.proyectoaplicacionesmoviles.Agenda.AgendaVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.Catalogo.CatalogoVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.ClientesVistaFragment;
+import com.example.lenovo.proyectoaplicacionesmoviles.PantallaPrincipal.ConfiguracionVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.ControlFinanciero.ControlFinancieroVistaFragment;
+import com.example.lenovo.proyectoaplicacionesmoviles.PantallaPrincipal.InicioVistaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +44,32 @@ public class MainActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = null;
+                Class fragmentClass;
+                fragmentClass = InicioVistaFragment.class;
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+                // Set action bar title
+                setTitle("Inicio");
+                // Close the navigation drawer
+                mDrawer.closeDrawers();
+            }
+        }, 200);
     }
+
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
@@ -83,10 +111,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
+
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.fragmentAgendaVista:
                 fragmentClass = AgendaVistaFragment.class;
                 break;
@@ -99,16 +128,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.fragmentControlFinancieroVista:
                 fragmentClass = ControlFinancieroVistaFragment.class;
                 break;
+            case R.id.fragmentConfiguracionVista:
+                fragmentClass = ConfiguracionVistaFragment.class;
+                break;
             default:
                 fragmentClass = AgendaVistaFragment.class;
         }
+
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
