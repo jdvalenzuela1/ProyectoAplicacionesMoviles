@@ -16,5 +16,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Clientes"/>
+        <Button
+            android:id="@+id/AgregarCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/holo_red_light"
+            android:textColor="@color/colorAccent"
+            android:drawableBottom="@drawable/ic_menu"/>
+        <EditText
+            android:id="@+id/NombreSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"/>
+        <EditText
+            android:id="@+id/ApellidoSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido"/>
     </LinearLayout>
 </FrameLayout>
