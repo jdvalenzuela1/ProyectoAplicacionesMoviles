@@ -16,9 +16,10 @@ import java.util.List;
  * Created by lenovo on 05-06-2018.
  */
 
-public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHolderClientes> {
+public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHolderClientes> implements View.OnClickListener {
 
     private List<Cliente> clientesList;
+    private View.OnClickListener listener;
 
     public ClienteAdapter(List<Cliente> clientesList) {
         this.clientesList = clientesList;
@@ -28,6 +29,7 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
     @Override
     public ViewHolderClientes onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cliente_item_list, null, false);
+        view.setOnClickListener(this);
         return new ViewHolderClientes(view);
     }
 
@@ -39,6 +41,17 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHold
     @Override
     public int getItemCount() {
         return clientesList.size();
+    }
+
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener != null){
+            listener.onClick(v);
+        }
     }
 
     public class ViewHolderClientes extends RecyclerView.ViewHolder {

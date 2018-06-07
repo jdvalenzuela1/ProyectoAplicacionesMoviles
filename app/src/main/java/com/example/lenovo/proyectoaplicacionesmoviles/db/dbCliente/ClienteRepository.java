@@ -34,16 +34,8 @@ public class ClienteRepository {
         new insertAsyncTask(mClienteDao).execute(clientesArray);
     }
 
-    public LiveData<List<Cliente>> getAllClientesByNombreSearch(String nombre) {
-        return mClienteDao.getAllClientesByNombreSearch(nombre);
-    }
-
-    public LiveData<List<Cliente>> getAllClientesByApellidoSearch(String apellido) {
-        return  mClienteDao.getAllClientesByApellidoSearch(apellido);
-    }
-
-    public LiveData<List<Cliente>> getAllClientesByComentarioSearch(String comentario) {
-        return mClienteDao.getAllClientesByComentarioSearch(comentario);
+    public LiveData<List<Cliente>> getAllClientesBySearchParameters(String nombre, String apellido, String comentario) {
+        return mClienteDao.getAllClientesBySearchParameters(nombre, apellido, comentario);
     }
 
     private static class insertAsyncTask extends AsyncTask<Cliente, Void, Void> {

@@ -28,7 +28,7 @@ import java.util.List;
 public class ClientesVistaFragment extends Fragment {
     private ClienteViewModel mClienteViewModel;
     private Button agregarCliente;
-    private RecyclerView recycler;
+    private RecyclerView recyclerClientes;
     private EditText nombreSearch;
     private EditText apellidoSearch;
     private EditText comentarioSearch;
@@ -58,25 +58,7 @@ public class ClientesVistaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String nombreSearchString = nombreSearch.getText().toString();
-                if (nombreSearchString != "") {
-                    // Agregar los Clientes de la base de datos al RecyclerView
-                    recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
-                    recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-                    mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
-                    mClienteViewModel.getAllClientesByNombreSearch("%" + nombreSearchString + "%").observe(getActivity(), new Observer<List<Cliente>>() {
-                        @Override
-                        public void onChanged(@Nullable final List<Cliente> clientes) {
-                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
-                            recycler.setAdapter(adapterClientes);
-                        }
-                    });
-                }
-                else {
-                    // Agregar los Clientes de la base de datos al RecyclerView
-                    AgregarClientesRecyclerView();
-                }
+                AgregarClientesFiltradosRecyclerView();
             }
 
             @Override
@@ -93,25 +75,7 @@ public class ClientesVistaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String apellidoSearchString = apellidoSearch.getText().toString();
-                if (apellidoSearchString != "") {
-                    // Agregar los Clientes de la base de datos al RecyclerView
-                    recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
-                    recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-                    mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
-                    mClienteViewModel.getAllClientesByApellidoSearch("%" + apellidoSearchString + "%").observe(getActivity(), new Observer<List<Cliente>>() {
-                        @Override
-                        public void onChanged(@Nullable final List<Cliente> clientes) {
-                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
-                            recycler.setAdapter(adapterClientes);
-                        }
-                    });
-                }
-                else {
-                    // Agregar los Clientes de la base de datos al RecyclerView
-                    AgregarClientesRecyclerView();
-                }
+                AgregarClientesFiltradosRecyclerView();
             }
 
             @Override
@@ -128,25 +92,7 @@ public class ClientesVistaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String comentarioSearchString = comentarioSearch.getText().toString();
-                if (comentarioSearchString != "") {
-                    // Agregar los Clientes de la base de datos al RecyclerView
-                    recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
-                    recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
-                    mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
-                    mClienteViewModel.getAllClientesByComentarioSearch("%" + comentarioSearchString + "%").observe(getActivity(), new Observer<List<Cliente>>() {
-                        @Override
-                        public void onChanged(@Nullable final List<Cliente> clientes) {
-                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
-                            recycler.setAdapter(adapterClientes);
-                        }
-                    });
-                }
-                else {
-                    // Agregar los Clientes de la base de datos al RecyclerView
-                    AgregarClientesRecyclerView();
-                }
+                AgregarClientesFiltradosRecyclerView();
             }
 
             @Override
@@ -170,16 +116,68 @@ public class ClientesVistaFragment extends Fragment {
         });
     }
 
+    private void AgregarClientesFiltradosRecyclerView() {
+        String nombreSearchString = nombreSearch.getText().toString();
+        String apellidoSearchString = apellidoSearch.getText().toString();
+        String comentarioSearchString = comentarioSearch.getText().toString();
+        if (nombreSearchString == "" && apellidoSearchString == "" && comentarioSearchString == "") {
+            AgregarClientesRecyclerView();
+        } else {
+            // Agregar los Clientes de la base de datos al RecyclerView
+            recyclerClientes = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
+            recyclerClientes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+            mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
+            mClienteViewModel.getAllClientesBySearchParameters("%" + nombreSearchString + "%",
+                    "%" + apellidoSearchString + "%", "%" + comentarioSearchString + "%")
+                    .observe(getActivity(), new Observer<List<Cliente>>() {
+                        @Override
+                        public void onChanged(@Nullable final List<Cliente> clientes) {
+                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
+                            adapterClientes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("ClienteId", clientes.get(recyclerClientes.getChildAdapterPosition(v)).getId_cliente());
+
+                                    Fragment editClientesVistaFragment= new EditClientesVistaFragment();
+                                    editClientesVistaFragment.setArguments(bundle);
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.flContent, editClientesVistaFragment,"editClientesVistaFragment")
+                                            .addToBackStack(null)
+                                            .commit();
+                                }
+                            });
+                            recyclerClientes.setAdapter(adapterClientes);
+                        }
+                    });
+        }
+    }
+
     private void AgregarClientesRecyclerView() {
-        recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
-        recycler.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerClientes = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
+        recyclerClientes.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
 
         mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
         mClienteViewModel.getAllClientes().observe(this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(@Nullable final List<Cliente> clientes) {
                 ClienteAdapter adapterClientes =  new ClienteAdapter(clientes);
-                recycler.setAdapter(adapterClientes);
+                adapterClientes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("ClienteId", clientes.get(recyclerClientes.getChildAdapterPosition(v)).getId_cliente());
+
+                        Fragment editClientesVistaFragment= new EditClientesVistaFragment();
+                        editClientesVistaFragment.setArguments(bundle);
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.flContent, editClientesVistaFragment,"editClientesVistaFragment")
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+                recyclerClientes.setAdapter(adapterClientes);
             }
         });
     }
