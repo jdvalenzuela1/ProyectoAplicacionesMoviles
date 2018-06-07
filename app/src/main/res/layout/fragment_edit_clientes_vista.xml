@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditClientesVistaFragment"
+    android:background="@android:color/holo_red_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/EditarCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Editar Cliente"/>
+    <TextView
+        android:id="@+id/IdClientePrueba"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Id Cliente"/>
+    </LinearLayout>
+</FrameLayout>
