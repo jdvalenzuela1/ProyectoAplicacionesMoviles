@@ -1,50 +1,62 @@
 package com.example.lenovo.proyectoaplicacionesmoviles.Clientes;
 
-import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lenovo on 05-06-2018.
  */
 
-public class ClienteAdapter extends ArrayAdapter<Cliente> {
-    private Context mContext;
-    private List<Cliente> clientesList = new ArrayList<>();
+public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ViewHolderClientes> {
 
-    public ClienteAdapter(Context context, ArrayList<Cliente> list) {
-        super(context, 0 , list);
-        mContext = context;
-        clientesList = list;
+    private List<Cliente> clientesList;
+
+    public ClienteAdapter(List<Cliente> clientesList) {
+        this.clientesList = clientesList;
     }
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
 
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.clienteitemview, parent, false);
+    @NonNull
+    @Override
+    public ViewHolderClientes onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cliente_item_list, null, false);
+        return new ViewHolderClientes(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolderClientes holder, int position) {
+        holder.asignarDatos(clientesList.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return clientesList.size();
+    }
+
+    public class ViewHolderClientes extends RecyclerView.ViewHolder {
+        TextView NombreClienteAdapter;
+        TextView ApellidoClienteAdapter;
+        TextView FechaCreacionAdapter;
+
+        public ViewHolderClientes(View itemView) {
+            super(itemView);
+            NombreClienteAdapter = itemView.findViewById(R.id.NombreClienteAdapter);
+            ApellidoClienteAdapter = itemView.findViewById(R.id.ApellidoClienteAdapter);
+            FechaCreacionAdapter = itemView.findViewById(R.id.FechaCreacionAdapter);
         }
 
-        // Get the data item for this position
-        Cliente cliente = getItem(position);
-
-        // Lookup view for data population
-        TextView nombre = (TextView) convertView.findViewById(R.id.NombreClienteAdapter);
-        TextView apellido = (TextView) convertView.findViewById(R.id.ApellidoClienteAdapter);
-
-        // Populate the data into the template view using the data object
-        nombre.setText(cliente.getNombre());
-        apellido.setText(cliente.getApellido());
-        // Return the completed view to render on screen
-        return convertView;
+        public void asignarDatos(Cliente cliente) {
+            NombreClienteAdapter.setText(cliente.getNombre());
+            ApellidoClienteAdapter.setText(cliente.getApellido());
+            FechaCreacionAdapter.setText(cliente.getFecha_creacion());
+        }
     }
 }

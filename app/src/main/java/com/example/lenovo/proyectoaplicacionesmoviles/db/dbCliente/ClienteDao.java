@@ -15,8 +15,17 @@ import java.util.List;
 @Dao
 public interface ClienteDao {
 
-    @Query("SELECT * FROM Cliente")
+    @Query("SELECT * FROM Cliente ORDER BY nombre, apellido")
     LiveData<List<Cliente>> getAllClientes();
+
+    @Query("SELECT * FROM Cliente WHERE nombre LIKE :nombre order by nombre, apellido")
+    LiveData<List<Cliente>> getAllClientesByNombreSearch(String nombre);
+
+    @Query("SELECT * FROM Cliente WHERE apellido LIKE :apellido order by nombre, apellido")
+    LiveData<List<Cliente>> getAllClientesByApellidoSearch(String apellido);
+
+    @Query("SELECT * FROM Cliente WHERE comentario LIKE :comentario order by nombre, apellido")
+    LiveData<List<Cliente>> getAllClientesByComentarioSearch(String comentario);
 
     @Query("SELECT * FROM Cliente WHERE id_cliente = :id_cliente")
     Cliente fetchOneClienteByClienteId (int id_cliente);

@@ -1,24 +1,24 @@
 package com.example.lenovo.proyectoaplicacionesmoviles.Clientes;
 
-import android.arch.persistence.room.Room;
-import android.content.Intent;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 
-import com.example.lenovo.proyectoaplicacionesmoviles.Catalogo.CatalogoVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
+import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,30 +26,160 @@ import java.util.List;
  */
 
 public class ClientesVistaFragment extends Fragment {
-    private ListView mainListView;
     private ClienteViewModel mClienteViewModel;
     private Button agregarCliente;
+    private RecyclerView recycler;
+    private EditText nombreSearch;
+    private EditText apellidoSearch;
+    private EditText comentarioSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_clientes_vista, container, false);
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Agregar los Clientes de la base de datos al RecyclerView
+        AgregarClientesRecyclerView();
+
+        // Inicializar los filtros de busqueda
+        nombreSearch = (EditText) getActivity().findViewById(R.id.NombreSearch);
+        apellidoSearch = (EditText) getActivity().findViewById(R.id.ApellidoSearch);
+        comentarioSearch = (EditText) getActivity().findViewById(R.id.ComentarioSearch);
+
+        nombreSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String nombreSearchString = nombreSearch.getText().toString();
+                if (nombreSearchString != "") {
+                    // Agregar los Clientes de la base de datos al RecyclerView
+                    recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
+                    recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                    mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
+                    mClienteViewModel.getAllClientesByNombreSearch("%" + nombreSearchString + "%").observe(getActivity(), new Observer<List<Cliente>>() {
+                        @Override
+                        public void onChanged(@Nullable final List<Cliente> clientes) {
+                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
+                            recycler.setAdapter(adapterClientes);
+                        }
+                    });
+                }
+                else {
+                    // Agregar los Clientes de la base de datos al RecyclerView
+                    AgregarClientesRecyclerView();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        apellidoSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String apellidoSearchString = apellidoSearch.getText().toString();
+                if (apellidoSearchString != "") {
+                    // Agregar los Clientes de la base de datos al RecyclerView
+                    recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
+                    recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                    mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
+                    mClienteViewModel.getAllClientesByApellidoSearch("%" + apellidoSearchString + "%").observe(getActivity(), new Observer<List<Cliente>>() {
+                        @Override
+                        public void onChanged(@Nullable final List<Cliente> clientes) {
+                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
+                            recycler.setAdapter(adapterClientes);
+                        }
+                    });
+                }
+                else {
+                    // Agregar los Clientes de la base de datos al RecyclerView
+                    AgregarClientesRecyclerView();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        comentarioSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String comentarioSearchString = comentarioSearch.getText().toString();
+                if (comentarioSearchString != "") {
+                    // Agregar los Clientes de la base de datos al RecyclerView
+                    recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
+                    recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+                    mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
+                    mClienteViewModel.getAllClientesByComentarioSearch("%" + comentarioSearchString + "%").observe(getActivity(), new Observer<List<Cliente>>() {
+                        @Override
+                        public void onChanged(@Nullable final List<Cliente> clientes) {
+                            ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
+                            recycler.setAdapter(adapterClientes);
+                        }
+                    });
+                }
+                else {
+                    // Agregar los Clientes de la base de datos al RecyclerView
+                    AgregarClientesRecyclerView();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        // Instanciar agregar cliente
         agregarCliente = (Button) getActivity().findViewById(R.id.AgregarCliente);
 
         agregarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewClientesVistaFragment nextFrag= new NewClientesVistaFragment();
+                Fragment newClientesVistaFragment= new NewClientesVistaFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flContent, nextFrag,"AgregarCliente")
+                        .replace(R.id.flContent, newClientesVistaFragment,"newClientesVistaFragment")
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+    }
+
+    private void AgregarClientesRecyclerView() {
+        recycler = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
+        recycler.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+
+        mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
+        mClienteViewModel.getAllClientes().observe(this, new Observer<List<Cliente>>() {
+            @Override
+            public void onChanged(@Nullable final List<Cliente> clientes) {
+                ClienteAdapter adapterClientes =  new ClienteAdapter(clientes);
+                recycler.setAdapter(adapterClientes);
             }
         });
     }

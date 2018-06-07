@@ -33,11 +33,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Apellido"/>
-        <ListView
-            android:id="@+id/TodosClientes"
+        <EditText
+            android:id="@+id/ComentarioSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
+            android:layout_height="wrap_content"
+            android:hint="Comentario"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ClientesRecyclerId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
     </LinearLayout>
 </FrameLayout>

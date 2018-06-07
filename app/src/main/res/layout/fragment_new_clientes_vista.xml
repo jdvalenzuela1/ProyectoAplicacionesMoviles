@@ -30,6 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo Elenctronico"/>
+        <EditText
+            android:id="@+id/ComentarioCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comentario"/>
         <Button
             android:id="@+id/GuardarCliente"
             android:layout_width="match_parent"
@@ -37,14 +42,6 @@
             android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
             android:text="Guardar"
-            android:drawableBottom="@drawable/ic_menu"/>
-        <Button
-            android:id="@+id/CancelarGuardarCliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:shadowColor="@android:color/holo_red_light"
-            android:textColor="@color/colorAccent"
-            android:text="Cancelar"
             android:drawableBottom="@drawable/ic_menu"/>
     </LinearLayout>
 </FrameLayout>

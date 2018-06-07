@@ -3,6 +3,7 @@ package com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.db.AppDatabase;
 
@@ -31,6 +32,18 @@ public class ClienteRepository {
         Cliente[] clientesArray = new Cliente[clientes.size()];
         clientesArray = clientes.toArray(clientesArray);
         new insertAsyncTask(mClienteDao).execute(clientesArray);
+    }
+
+    public LiveData<List<Cliente>> getAllClientesByNombreSearch(String nombre) {
+        return mClienteDao.getAllClientesByNombreSearch(nombre);
+    }
+
+    public LiveData<List<Cliente>> getAllClientesByApellidoSearch(String apellido) {
+        return  mClienteDao.getAllClientesByApellidoSearch(apellido);
+    }
+
+    public LiveData<List<Cliente>> getAllClientesByComentarioSearch(String comentario) {
+        return mClienteDao.getAllClientesByComentarioSearch(comentario);
     }
 
     private static class insertAsyncTask extends AsyncTask<Cliente, Void, Void> {

@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by lenovo on 05-06-2018.
@@ -23,10 +27,10 @@ import java.util.ArrayList;
 
 public class NewClientesVistaFragment extends Fragment {
     private Button guardarCliente;
-    private Button cancelarGuardarCliente;
     private EditText nombreCliente;
     private EditText apellidoCliente;
     private EditText emailCliente;
+    private EditText comentarioCliente;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +45,10 @@ public class NewClientesVistaFragment extends Fragment {
         final ClienteViewModel mClienteViewProvider = ViewModelProviders.of(this).get(ClienteViewModel.class);
 
         guardarCliente = (Button) getActivity().findViewById(R.id.GuardarCliente);
-        cancelarGuardarCliente = (Button) getActivity().findViewById(R.id.CancelarGuardarCliente);
-
         nombreCliente = (EditText) getActivity().findViewById(R.id.NombreCliente);
         apellidoCliente = (EditText) getActivity().findViewById(R.id.ApellidoCliente);
         emailCliente = (EditText) getActivity().findViewById(R.id.EmailCliente);
+        comentarioCliente = (EditText) getActivity().findViewById(R.id.ComentarioCliente);
 
         guardarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,34 +60,26 @@ public class NewClientesVistaFragment extends Fragment {
                     String nombreClienteString = nombreCliente.getText().toString();
                     String apellidoClienteString = apellidoCliente.getText().toString();
                     String emailClienteString = emailCliente.getText().toString();
+                    String comentarioClienteString = comentarioCliente.getText().toString();
+                    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
                     Cliente cliente = new Cliente();
                     cliente.setNombre(nombreClienteString);
                     cliente.setApellido(apellidoClienteString);
                     cliente.setEmail(emailClienteString);
+                    cliente.setComentario(comentarioClienteString);
+                    cliente.setFecha_creacion(currentDateTimeString);
 
                     ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
                     listaCliente.add(cliente);
 
                     mClienteViewProvider.insert(listaCliente);
                     Toast.makeText(getActivity(), "Cliente Guardado con exito", Toast.LENGTH_LONG).show();
-                    volverClientesVistaFragment();
+
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.popBackStack();
                 }
             }
         });
-
-        cancelarGuardarCliente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                volverClientesVistaFragment();
-            }
-        });
     }
-    public void volverClientesVistaFragment() {
-        NewClientesVistaFragment nextFrag = new NewClientesVistaFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flContent, nextFrag, "AgregarCliente")
-                .addToBackStack(null)
-                .commit();
-        }
 }
