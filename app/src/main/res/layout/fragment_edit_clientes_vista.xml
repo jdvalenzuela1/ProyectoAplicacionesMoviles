@@ -10,15 +10,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <TextView
-        android:id="@+id/EditarCliente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Editar Cliente"/>
-    <TextView
-        android:id="@+id/IdClientePrueba"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Id Cliente"/>
+        <TextView
+            android:id="@+id/EditarCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar Cliente"/>
+        <TextView
+            android:id="@+id/FechaCreacionCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha Creacion"/>
+        <EditText
+            android:id="@+id/EditNombreCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"/>
+        <EditText
+            android:id="@+id/EditApellidoCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido"/>
+        <EditText
+            android:id="@+id/EditEmailCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo Elenctronico"/>
+        <EditText
+            android:id="@+id/EditComentarioCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comentario"/>
+        <Button
+            android:id="@+id/ActualizarCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="Actualizar"
+            android:drawableBottom="@drawable/ic_menu"/>
+        <Button
+            android:id="@+id/EliminarCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="Eliminar"
+            android:drawableBottom="@drawable/ic_menu"/>
     </LinearLayout>
 </FrameLayout>

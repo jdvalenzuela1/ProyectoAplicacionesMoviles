@@ -28,6 +28,15 @@ public class ClienteViewModel  extends AndroidViewModel {
     public LiveData<List<Cliente>> getAllClientesBySearchParameters(String nombre, String apellido, String comentario) {
         return mRepository.getAllClientesBySearchParameters(nombre, apellido, comentario);
     }
+    public Cliente SelectClienteByClienteId(int id_cliente){
+        return mRepository.SelectClienteByClienteId(id_cliente);
+    }
+    public void deleteClienteByClienteId(int id_cliente){
+        mRepository.deleteClienteByClienteId(id_cliente);
+    }
+    public void updateCliente(Cliente cliente){
+        mRepository.updateCliente(cliente);
+    }
 
     public void insert(List<Cliente> clientes) {
         mRepository.insert(clientes);

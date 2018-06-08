@@ -53,8 +53,12 @@ public class NewClientesVistaFragment extends Fragment {
         guardarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nombreCliente.getText().toString().equals("") || apellidoCliente.getText().toString().equals("") || emailCliente.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "Faltan datos por completar", Toast.LENGTH_LONG).show();
+                if (nombreCliente.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Nombre es un campo obligatorio", Toast.LENGTH_LONG).show();
+                } else if (apellidoCliente.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Apellido es un campo obligatorio", Toast.LENGTH_LONG).show();
+                } else if (nombreCliente.getText().toString().equals("") && apellidoCliente.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Nombre y Apellido son campos obligatorios", Toast.LENGTH_LONG).show();
                 } else {
 
                     String nombreClienteString = nombreCliente.getText().toString();

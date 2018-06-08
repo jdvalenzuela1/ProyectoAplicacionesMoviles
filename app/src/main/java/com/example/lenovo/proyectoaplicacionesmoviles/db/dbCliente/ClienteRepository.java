@@ -21,17 +21,26 @@ public class ClienteRepository {
     ClienteRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         mClienteDao = db.clienteDao();
-        mAllClientes = mClienteDao.getAllClientes();
     }
 
     LiveData<List<Cliente>> getAllClientes() {
-        return mAllClientes;
+        return mClienteDao.getAllClientes();
+    }
+
+    public Cliente SelectClienteByClienteId(int id_cliente){
+        return mClienteDao.SelectClienteByClienteId(id_cliente);
     }
 
     public void insert (List<Cliente> clientes) {
         Cliente[] clientesArray = new Cliente[clientes.size()];
         clientesArray = clientes.toArray(clientesArray);
         new insertAsyncTask(mClienteDao).execute(clientesArray);
+    }
+    public void deleteClienteByClienteId(int id_cliente){
+        mClienteDao.deleteClienteByClienteId(id_cliente);
+    }
+    public void updateCliente(Cliente cliente){
+        mClienteDao.updateCliente(cliente);
     }
 
     public LiveData<List<Cliente>> getAllClientesBySearchParameters(String nombre, String apellido, String comentario) {

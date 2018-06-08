@@ -23,7 +23,7 @@ public interface ClienteDao {
     LiveData<List<Cliente>> getAllClientesBySearchParameters(String nombre, String apellido, String comentario);
 
     @Query("SELECT * FROM Cliente WHERE id_cliente = :id_cliente")
-    Cliente fetchOneClienteByClienteId (int id_cliente);
+    Cliente SelectClienteByClienteId (int id_cliente);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(Cliente... clientes);
@@ -35,7 +35,7 @@ public interface ClienteDao {
     void deleteAll();
 
     @Query("DELETE FROM Cliente WHERE id_cliente = :id_cliente")
-    void deleteOneClienteByClienteId(int id_cliente);
+    void deleteClienteByClienteId(int id_cliente);
 
     @Update
     void updateCliente (Cliente cliente);
