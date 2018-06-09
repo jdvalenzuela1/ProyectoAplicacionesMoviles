@@ -34,10 +34,13 @@ public interface ClienteDao {
     @Query("DELETE FROM Cliente")
     void deleteAll();
 
+    @Query("UPDATE Cliente SET nombre = :nombre, apellido = :apellido, comentario = :comentario, email = :email WHERE id_cliente = :id_cliente")
+    void updateCliente(int id_cliente, String nombre, String apellido, String email, String comentario);
+
     @Query("DELETE FROM Cliente WHERE id_cliente = :id_cliente")
     void deleteClienteByClienteId(int id_cliente);
 
     @Update
-    void updateCliente (Cliente cliente);
+    public void update(Cliente... cliente);
 }
 

@@ -20,6 +20,7 @@ import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by lenovo on 21-05-2018.
@@ -43,7 +44,13 @@ public class ClientesVistaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Agregar los Clientes de la base de datos al RecyclerView
-        AgregarClientesRecyclerView();
+        try {
+            AgregarClientesRecyclerView();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Inicializar los filtros de busqueda
         nombreSearch = (EditText) getActivity().findViewById(R.id.NombreSearch);
@@ -58,7 +65,13 @@ public class ClientesVistaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                AgregarClientesFiltradosRecyclerView();
+                try {
+                    AgregarClientesFiltradosRecyclerView();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -75,7 +88,13 @@ public class ClientesVistaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                AgregarClientesFiltradosRecyclerView();
+                try {
+                    AgregarClientesFiltradosRecyclerView();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -92,7 +111,13 @@ public class ClientesVistaFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                AgregarClientesFiltradosRecyclerView();
+                try {
+                    AgregarClientesFiltradosRecyclerView();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -116,7 +141,7 @@ public class ClientesVistaFragment extends Fragment {
         });
     }
 
-    private void AgregarClientesFiltradosRecyclerView() {
+    private void AgregarClientesFiltradosRecyclerView() throws ExecutionException, InterruptedException {
         String nombreSearchString = nombreSearch.getText().toString();
         String apellidoSearchString = apellidoSearch.getText().toString();
         String comentarioSearchString = comentarioSearch.getText().toString();
@@ -154,7 +179,7 @@ public class ClientesVistaFragment extends Fragment {
         }
     }
 
-    private void AgregarClientesRecyclerView() {
+    private void AgregarClientesRecyclerView() throws ExecutionException, InterruptedException {
         recyclerClientes = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
         recyclerClientes.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
 

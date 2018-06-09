@@ -18,6 +18,8 @@ import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by lenovo on 07-06-2018.
  */
@@ -55,7 +57,14 @@ public class EditClientesVistaFragment  extends Fragment {
 
         mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
 
-       Cliente cliente = mClienteViewModel.SelectClienteByClienteId(clienteId);
+        Cliente cliente = null;
+        try {
+            cliente = mClienteViewModel.SelectClienteByClienteId(clienteId);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         fechaCreacion.setText(cliente.getFecha_creacion());
         editNombreCliente.setText(cliente.getNombre());
@@ -69,6 +78,11 @@ public class EditClientesVistaFragment  extends Fragment {
         actualizarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                editNombreCliente = (EditText) getActivity().findViewById(R.id.EditNombreCliente);
+                editApellidoCliente = (EditText) getActivity().findViewById(R.id.EditApellidoCliente);
+                editEmailCliente = (EditText) getActivity().findViewById(R.id.EditEmailCliente);
+                editComentarioCliente = (EditText) getActivity().findViewById(R.id.EditComentarioCliente);
 
                 Cliente cliente = new Cliente();
                 cliente.setNombre(editNombreCliente.getText().toString());

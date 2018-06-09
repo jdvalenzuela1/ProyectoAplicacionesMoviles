@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by lenovo on 03-06-2018.
@@ -21,14 +22,14 @@ public class ClienteViewModel  extends AndroidViewModel {
         mRepository = new ClienteRepository(application);
     }
 
-    public LiveData<List<Cliente>> getAllClientes() {
+    public LiveData<List<Cliente>> getAllClientes() throws ExecutionException, InterruptedException {
         return mRepository.getAllClientes();
     }
 
-    public LiveData<List<Cliente>> getAllClientesBySearchParameters(String nombre, String apellido, String comentario) {
+    public LiveData<List<Cliente>> getAllClientesBySearchParameters(String nombre, String apellido, String comentario) throws ExecutionException, InterruptedException {
         return mRepository.getAllClientesBySearchParameters(nombre, apellido, comentario);
     }
-    public Cliente SelectClienteByClienteId(int id_cliente){
+    public Cliente SelectClienteByClienteId(int id_cliente) throws ExecutionException, InterruptedException {
         return mRepository.SelectClienteByClienteId(id_cliente);
     }
     public void deleteClienteByClienteId(int id_cliente){

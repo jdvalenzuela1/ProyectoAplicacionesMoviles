@@ -7,9 +7,13 @@
     android:background="@android:color/holo_orange_dark">
 
     <LinearLayout
+        android:id="@+id/LinearLayoutClienteVista"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/Clientes"
