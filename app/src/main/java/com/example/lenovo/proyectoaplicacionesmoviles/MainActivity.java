@@ -19,12 +19,49 @@ import com.example.lenovo.proyectoaplicacionesmoviles.PantallaPrincipal.Configur
 import com.example.lenovo.proyectoaplicacionesmoviles.ControlFinanciero.ControlFinancieroVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.PantallaPrincipal.InicioVistaFragment;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.MergeCursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.function.Function;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+
+    static final int REQUEST_PERMISSION_KEY = 1;
+    //LoadAlbum loadAlbumTask;
+    GridView galleryGridView;
+    ArrayList<HashMap<String, String>> albumList = new ArrayList<HashMap<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawer.closeDrawers();
             }
         }, 200);
+
     }
 
 
