@@ -41,6 +41,6 @@ public interface ClienteDao {
     void deleteClienteByClienteId(int id_cliente);
 
     @Update
-    public void update(Cliente... cliente);
+    void update(Cliente cliente);
 }
 

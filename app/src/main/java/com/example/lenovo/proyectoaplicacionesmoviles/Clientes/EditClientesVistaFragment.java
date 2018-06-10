@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,21 +75,18 @@ public class EditClientesVistaFragment  extends Fragment {
 
         actualizarCliente = (Button) getActivity().findViewById(R.id.ActualizarCliente);
         eliminarCliente = (Button) getActivity().findViewById(R.id.EliminarCliente);
-
+        Log.d("mensaje", String.valueOf(cliente.getId_cliente()));
         actualizarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                editNombreCliente = (EditText) getActivity().findViewById(R.id.EditNombreCliente);
-                editApellidoCliente = (EditText) getActivity().findViewById(R.id.EditApellidoCliente);
-                editEmailCliente = (EditText) getActivity().findViewById(R.id.EditEmailCliente);
-                editComentarioCliente = (EditText) getActivity().findViewById(R.id.EditComentarioCliente);
-
                 Cliente cliente = new Cliente();
+                cliente.setId_cliente(clienteId);
                 cliente.setNombre(editNombreCliente.getText().toString());
                 cliente.setApellido(editApellidoCliente.getText().toString());
                 cliente.setEmail(editEmailCliente.getText().toString());
                 cliente.setComentario(editComentarioCliente.getText().toString());
+                cliente.setFecha_creacion(fechaCreacion.getText().toString());
                 mClienteViewModel.updateCliente(cliente);
                 Toast.makeText(getActivity(), "Cliente actualizado con exito", Toast.LENGTH_LONG).show();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

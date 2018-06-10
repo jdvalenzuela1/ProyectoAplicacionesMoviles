@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ProyectoAplicacionesMoviles.iml" filepath="$PROJECT_DIR$/ProyectoAplicacionesMoviles.iml" />
+      <module fileurl="file://C:\Users\lenovo\Desktop\Universidad201801\2- Aplicaciones Moviles\Proyecto\Repo Proyecto\ProyectoAplicacionesMoviles.iml" filepath="C:\Users\lenovo\Desktop\Universidad201801\2- Aplicaciones Moviles\Proyecto\Repo Proyecto\ProyectoAplicacionesMoviles.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Repo Proyecto.iml" filepath="$PROJECT_DIR$/Repo Proyecto.iml" />
       <module fileurl="file://D:\AppsMovilesLabs\ProyectoAplicacionesMoviles\Repo Proyecto.iml" filepath="D:\AppsMovilesLabs\ProyectoAplicacionesMoviles\Repo Proyecto.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

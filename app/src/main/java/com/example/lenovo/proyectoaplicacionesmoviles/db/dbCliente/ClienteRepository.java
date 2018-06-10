@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 public class ClienteRepository {
 
     private ClienteDao mClienteDao;
-    private LiveData<List<Cliente>> mAllClientes;
+
 
     ClienteRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -130,15 +130,8 @@ public class ClienteRepository {
 
         @Override
         protected Void doInBackground(final Cliente... params) {
-            Integer id_cliente = params[0].getId_cliente();
-            String nombre = params[0].getNombre();
-            String apellido = params[0].getApellido();
-            String email = params[0].getEmail();
-            String comentario = params[0].getComentario();
 
-            mAsyncTaskDao.update(params);
-
-            // mAsyncTaskDao.updateCliente(id_cliente, nombre, apellido, email, comentario);
+            mAsyncTaskDao.update(params[0]);
             return null;
         }
     }
