@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,12 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
     private EditText fichaServicioApellidoBuscador;
     private EditText fichaServicioComentarioBuscador;
 
+    private int anio, mes, dia, hora, minuto;
+    private String tratamiento;
+    private int medioPago;
+    private String comentario;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,17 +55,30 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // Agregar los Clientes de la base de datos al RecyclerView
         try {
-            AgregarClientesRecyclerView();
+            AgregarClientesFichaServicioRecyclerView();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        // Obtener los Parametros anteriormente llenados
+        Bundle bundle = getArguments();
+        anio = bundle.getInt("anio");
+        mes = bundle.getInt("mes");
+        dia = bundle.getInt("dia");
+        hora = bundle.getInt("hora");
+        minuto = bundle.getInt("minuto");
+        tratamiento = bundle.getString("Tratamiento");
+        medioPago = bundle.getInt("MedioPago");
+        comentario = bundle.getString("Comentario");
+
         // Inicializar los filtros de busqueda
         fichaServicioNombreBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioNombreBuscador);
         fichaServicioApellidoBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioApellidoBuscador);
         fichaServicioComentarioBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioComentarioBuscador);
+
+
 
         fichaServicioNombreBuscador.addTextChangedListener(new TextWatcher() {
             @Override
@@ -137,7 +157,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
         String apellidoSearchString = fichaServicioApellidoBuscador.getText().toString();
         String comentarioSearchString = fichaServicioComentarioBuscador.getText().toString();
         if (nombreSearchString == "" && apellidoSearchString == "" && comentarioSearchString == "") {
-            AgregarClientesRecyclerView();
+            AgregarClientesFichaServicioRecyclerView();
         } else {
             // Agregar los Clientes de la base de datos al RecyclerView
             recyclerFichaServicio = (RecyclerView) getActivity().findViewById(R.id.FichaServicioClientesRecyclerId);
@@ -157,12 +177,20 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                                     bundle.putInt("ClienteId", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getId_cliente());
                                     bundle.putString("ClienteNombre", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getNombre());
                                     bundle.putString("ClienteApellido", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getApellido());
+                                    bundle.putInt("anio", anio);
+                                    bundle.putInt("mes", mes);
+                                    bundle.putInt("dia", dia);
+                                    bundle.putInt("hora", hora);
+                                    bundle.putInt("minuto", minuto);
+                                    bundle.putString("Tratamiento", tratamiento);
+                                    bundle.putInt("MedioPago", medioPago);
+                                    bundle.putString("Comentario", comentario);
 
                                     Fragment nuevaFichaServicioVistaFragment= new NuevaFichaServicioVistaFragment();
                                     nuevaFichaServicioVistaFragment.setArguments(bundle);
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .replace(R.id.flContent, nuevaFichaServicioVistaFragment,"nuevaFichaServicioVistaFragment")
-                                            .addToBackStack(null);
+                                            .addToBackStack(null).commit();
                                 }
                             });
                             recyclerFichaServicio.setAdapter(adapterClientes);
@@ -171,10 +199,10 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
         }
     }
 
-    private void AgregarClientesRecyclerView() throws ExecutionException, InterruptedException {
+    private void AgregarClientesFichaServicioRecyclerView() throws ExecutionException, InterruptedException {
         recyclerFichaServicio = (RecyclerView) getActivity().findViewById(R.id.FichaServicioClientesRecyclerId);
         recyclerFichaServicio.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
-
+        Log.d("Mensaje", "funciona");
         mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
         mClienteViewModel.getAllClientes().observe(this, new Observer<List<Cliente>>() {
             @Override
@@ -187,12 +215,20 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                         bundle.putInt("ClienteId", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getId_cliente());
                         bundle.putString("ClienteNombre", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getNombre());
                         bundle.putString("ClienteApellido", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getApellido());
+                        bundle.putInt("anio", anio);
+                        bundle.putInt("mes", mes);
+                        bundle.putInt("dia", dia);
+                        bundle.putInt("hora", hora);
+                        bundle.putInt("minuto", minuto);
+                        bundle.putString("Tratamiento", tratamiento);
+                        bundle.putInt("MedioPago", medioPago);
+                        bundle.putString("Comentario", comentario);
 
-                        Fragment nuevaFichaServicioVistaFragment= new EditClientesVistaFragment();
+                        Fragment nuevaFichaServicioVistaFragment= new NuevaFichaServicioVistaFragment();
                         nuevaFichaServicioVistaFragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.flContent, nuevaFichaServicioVistaFragment,"nuevaFichaServicioVistaFragment")
-                                .addToBackStack(null);
+                                .addToBackStack(null).commit();
                     }
                 });
                 recyclerFichaServicio.setAdapter(adapterClientes);

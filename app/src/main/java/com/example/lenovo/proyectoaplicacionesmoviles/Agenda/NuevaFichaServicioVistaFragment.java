@@ -42,6 +42,9 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
     private Button guardarFichaServicio;
     private Button fechayHoraBotonFichaServicio;
     private Button buscarCliente;
+    private int ClienteId;
+    private TextView nombreCliente;
+    private TextView apellidoCliente;
     private TextView fechayHoraSeleccionadaFichaServicios;
     private EditText tratamientoFichaServicio;
     private Spinner medioPagoFichaServicio;
@@ -67,17 +70,30 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
 
         guardarFichaServicio = (Button) getActivity().findViewById(R.id.GuardarFichaServicio);
         buscarCliente = (Button) getActivity().findViewById(R.id.BuscarFichaServicioCliente);
+        nombreCliente = (TextView) getActivity().findViewById(R.id.NombreClienteFichaServicio);
+        apellidoCliente = (TextView) getActivity().findViewById(R.id.ApellidoClienteFichaServicio);
         fechayHoraBotonFichaServicio = (Button) getActivity().findViewById(R.id.FechayHoraBotonFichaServicio);
         fechayHoraSeleccionadaFichaServicios = (TextView) getActivity().findViewById(R.id.FechayHoraSeleccionadaFichaServicios);
         tratamientoFichaServicio = (EditText) getActivity().findViewById(R.id.TratamientoFichaServicio);
         medioPagoFichaServicio = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicio);
         comentarioFichaServicio = (EditText) getActivity().findViewById(R.id.ComentarioFichaServicio);
 
+
         Bundle bundle = getArguments();
+        ClienteId = bundle.getInt("ClienteId");
+        String ClienteNombre = bundle.getString("ClienteNombre");
+        String ClienteApellido = bundle.getString("ClienteApellido");
         anio = bundle.getInt("anio");
         mes = bundle.getInt("mes");
         dia = bundle.getInt("dia");
-        Log.d("anio", Integer.toString(anio));
+        hora = bundle.getInt("hora");
+        minuto = bundle.getInt("minuto");
+        tratamientoFichaServicio.setText(bundle.getString("Tratamiento"));
+        medioPagoFichaServicio.setSelection(bundle.getInt("MedioPago"));
+        comentarioFichaServicio.setText(bundle.getString("Comentario"));
+
+        nombreCliente.setText(ClienteNombre);
+        apellidoCliente.setText(ClienteApellido);
 
         fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+"00:00");
 
@@ -92,9 +108,19 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         buscarCliente.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("evento", "se apreto");
+
                         Fragment buscarClienteFichaServicioFragment= new BuscarClienteFichaServicioFragment();
-                        Log.d("evento", "se apreto");
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("anio", anio);
+                        bundle.putInt("mes", mes);
+                        bundle.putInt("dia", dia);
+                        bundle.putString("Tratamiento", tratamientoFichaServicio.getText().toString());
+                        bundle.putInt("MedioPago", (int) medioPagoFichaServicio.getSelectedItemId());
+                        bundle.putString("Comentario", comentarioFichaServicio.getText().toString());
+
+
+                        buscarClienteFichaServicioFragment.setArguments(bundle);
+
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.flContent, buscarClienteFichaServicioFragment,"buscarClienteFichaServicioFragment")
                                 .addToBackStack(null)

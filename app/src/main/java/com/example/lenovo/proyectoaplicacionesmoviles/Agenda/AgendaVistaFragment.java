@@ -19,6 +19,7 @@ import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicio;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicioViewModel;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -54,6 +55,11 @@ public class AgendaVistaFragment extends Fragment {
 
         agregarFichaServicio = (Button) getActivity().findViewById(R.id.AgregarFicha);
         calendario = (CalendarView) getActivity().findViewById(R.id.CalendarView);
+
+        Calendar FechaActual = Calendar.getInstance();
+        anio = FechaActual.get(Calendar.YEAR);
+        mes = FechaActual.get(Calendar.MONTH);
+        dia = FechaActual.get(Calendar.DAY_OF_MONTH);
 
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

@@ -28,6 +28,9 @@ public class FichaServicio {
     @ColumnInfo(name = "hora")
     private String hora;
 
+    @ColumnInfo(name = "precio")
+    private int precio;
+
     @ColumnInfo(name = "medio_pago")
     private String medio_pago;
 
@@ -42,6 +45,7 @@ public class FichaServicio {
         this.tratamiento = tratamiento;
         this.fecha = fecha;
         this.hora = hora;
+        this.precio = precio;
         this.medio_pago = medio_pago;
         this.comentario = comentario;
         this.pagado = false;
@@ -83,8 +87,16 @@ public class FichaServicio {
         return hora;
     }
 
-    public void setHora(String email) {
+    public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
     }
 
     public String getMedio_pago() {
