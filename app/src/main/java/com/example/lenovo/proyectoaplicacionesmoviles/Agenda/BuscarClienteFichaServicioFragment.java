@@ -38,9 +38,8 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
     private EditText fichaServicioComentarioBuscador;
 
     private int anio, mes, dia, hora, minuto;
-    private String tratamiento;
-    private int medioPago;
-    private String comentario;
+    private int medioPago, precio;
+    private String tratamiento, comentario;
 
 
     @Override
@@ -69,10 +68,10 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
         dia = bundle.getInt("dia");
         hora = bundle.getInt("hora");
         minuto = bundle.getInt("minuto");
+        precio = bundle.getInt("precio");
         tratamiento = bundle.getString("Tratamiento");
         medioPago = bundle.getInt("MedioPago");
         comentario = bundle.getString("Comentario");
-
         // Inicializar los filtros de busqueda
         fichaServicioNombreBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioNombreBuscador);
         fichaServicioApellidoBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioApellidoBuscador);
@@ -182,6 +181,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                                     bundle.putInt("dia", dia);
                                     bundle.putInt("hora", hora);
                                     bundle.putInt("minuto", minuto);
+                                    bundle.putInt("precio", precio);
                                     bundle.putString("Tratamiento", tratamiento);
                                     bundle.putInt("MedioPago", medioPago);
                                     bundle.putString("Comentario", comentario);
@@ -220,6 +220,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                         bundle.putInt("dia", dia);
                         bundle.putInt("hora", hora);
                         bundle.putInt("minuto", minuto);
+                        bundle.putInt("precio", precio);
                         bundle.putString("Tratamiento", tratamiento);
                         bundle.putInt("MedioPago", medioPago);
                         bundle.putString("Comentario", comentario);

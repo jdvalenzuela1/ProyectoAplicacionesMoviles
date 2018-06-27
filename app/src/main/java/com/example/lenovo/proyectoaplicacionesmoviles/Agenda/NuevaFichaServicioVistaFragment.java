@@ -27,6 +27,7 @@ import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicio;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicioViewModel;
+import com.santalu.maskedittext.MaskEditText;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -51,6 +52,7 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
     private EditText comentarioFichaServicio;
     private int dia, mes, anio, hora, minuto;
     private int diaFinal, mesFinal, anioFinal, horaFinal, minutoFinal;
+    private MaskEditText precioFichaServicio;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +77,8 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         fechayHoraBotonFichaServicio = (Button) getActivity().findViewById(R.id.FechayHoraBotonFichaServicio);
         fechayHoraSeleccionadaFichaServicios = (TextView) getActivity().findViewById(R.id.FechayHoraSeleccionadaFichaServicios);
         tratamientoFichaServicio = (EditText) getActivity().findViewById(R.id.TratamientoFichaServicio);
+
+        precioFichaServicio = (MaskEditText) getActivity().findViewById(R.id.PrecioFichaServicio);
         medioPagoFichaServicio = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicio);
         comentarioFichaServicio = (EditText) getActivity().findViewById(R.id.ComentarioFichaServicio);
 
@@ -90,8 +94,12 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         minuto = bundle.getInt("minuto");
         tratamientoFichaServicio.setText(bundle.getString("Tratamiento"));
         medioPagoFichaServicio.setSelection(bundle.getInt("MedioPago"));
-        comentarioFichaServicio.setText(bundle.getString("Comentario"));
+        int precioTemp = bundle.getInt("precio");
+        if (precioTemp != 0) {
+            precioFichaServicio.setText(Integer.toString(precioTemp));
+        }
 
+        comentarioFichaServicio.setText(bundle.getString("Comentario"));
         nombreCliente.setText(ClienteNombre);
         apellidoCliente.setText(ClienteApellido);
 
@@ -114,6 +122,8 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
                         bundle.putInt("anio", anio);
                         bundle.putInt("mes", mes);
                         bundle.putInt("dia", dia);
+                        String precio = precioFichaServicio.getRawText();
+                        bundle.putInt("precio", Integer.parseInt(precio));
                         bundle.putString("Tratamiento", tratamientoFichaServicio.getText().toString());
                         bundle.putInt("MedioPago", (int) medioPagoFichaServicio.getSelectedItemId());
                         bundle.putString("Comentario", comentarioFichaServicio.getText().toString());
