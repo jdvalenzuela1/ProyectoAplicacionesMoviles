@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import java.util.Date;
  * Created by lenovo on 05-06-2018.
  */
 
-public class NewClientesVistaFragment extends Fragment {
+public class NuevoClienteVistaFragment extends Fragment {
     private Button guardarCliente;
     private EditText nombreCliente;
     private EditText apellidoCliente;
@@ -36,7 +35,7 @@ public class NewClientesVistaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_clientes_vista, container, false);
+        return inflater.inflate(R.layout.fragment_nuevo_cliente_vista, container, false);
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

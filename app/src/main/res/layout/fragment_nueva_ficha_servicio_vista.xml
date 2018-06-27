@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Agenda.NuevaFichaServicioVistaFragment"
+    android:background="@android:color/holo_red_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/NuevaFichaServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nueva Ficha de Servicio"/>
+        <Button
+            android:id="@+id/BuscarFichaServicioCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/holo_red_light"
+            android:textColor="@color/colorAccent"
+            android:text="Buscar Cliente"
+            android:drawableBottom="@drawable/ic_menu"/>
+        <EditText
+            android:id="@+id/TratamientoFichaServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tratamiento del cliente"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha del Tratamiento: "/>
+        <TextView
+            android:id="@+id/FechayHoraSeleccionadaFichaServicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/FechayHoraBotonFichaServicio"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:drawableBottom="@drawable/ic_menu"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medio de pago"/>
+        <Spinner
+            android:id="@+id/MedioPagoFichaServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/ComentarioFichaServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comentario de la Ficha de servicio"/>
+        <Button
+            android:id="@+id/GuardarFichaServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/holo_red_light"
+            android:textColor="@color/colorAccent"
+            android:text="Guardar"
+            android:drawableBottom="@drawable/ic_menu"/>
+    </LinearLayout>
+</FrameLayout>

@@ -1,10 +1,12 @@
-package com.example.lenovo.proyectoaplicacionesmoviles.Clientes;
+package com.example.lenovo.proyectoaplicacionesmoviles.Agenda;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,9 +14,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.ClienteAdapter;
+import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditClientesVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
@@ -23,26 +26,26 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by lenovo on 21-05-2018.
+ * Created by lenovo on 27-06-2018.
  */
 
-public class ClientesVistaFragment extends Fragment {
+public class BuscarClienteFichaServicioFragment extends Fragment {
     private ClienteViewModel mClienteViewModel;
-    private Button agregarCliente;
-    private RecyclerView recyclerClientes;
-    private EditText nombreSearch;
-    private EditText apellidoSearch;
-    private EditText comentarioSearch;
+    private RecyclerView recyclerFichaServicio;
+    private EditText fichaServicioNombreBuscador;
+    private EditText fichaServicioApellidoBuscador;
+    private EditText fichaServicioComentarioBuscador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_clientes_vista, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_buscar_cliente_ficha_servicio, container, false);
     }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // Agregar los Clientes de la base de datos al RecyclerView
         try {
             AgregarClientesRecyclerView();
@@ -53,11 +56,11 @@ public class ClientesVistaFragment extends Fragment {
         }
 
         // Inicializar los filtros de busqueda
-        nombreSearch = (EditText) getActivity().findViewById(R.id.NombreSearch);
-        apellidoSearch = (EditText) getActivity().findViewById(R.id.ApellidoSearch);
-        comentarioSearch = (EditText) getActivity().findViewById(R.id.ComentarioSearch);
+        fichaServicioNombreBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioNombreBuscador);
+        fichaServicioApellidoBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioApellidoBuscador);
+        fichaServicioComentarioBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioComentarioBuscador);
 
-        nombreSearch.addTextChangedListener(new TextWatcher() {
+        fichaServicioNombreBuscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -66,7 +69,7 @@ public class ClientesVistaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    AgregarClientesFiltradosRecyclerView();
+                    AgregarClientesFiltradosFichaServicioRecyclerView();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -80,7 +83,7 @@ public class ClientesVistaFragment extends Fragment {
             }
         });
 
-        apellidoSearch.addTextChangedListener(new TextWatcher() {
+        fichaServicioApellidoBuscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -89,7 +92,7 @@ public class ClientesVistaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    AgregarClientesFiltradosRecyclerView();
+                    AgregarClientesFiltradosFichaServicioRecyclerView();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -103,7 +106,7 @@ public class ClientesVistaFragment extends Fragment {
             }
         });
 
-        comentarioSearch.addTextChangedListener(new TextWatcher() {
+        fichaServicioComentarioBuscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -112,7 +115,7 @@ public class ClientesVistaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    AgregarClientesFiltradosRecyclerView();
+                    AgregarClientesFiltradosFichaServicioRecyclerView();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -123,34 +126,22 @@ public class ClientesVistaFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-            }
-        });
-
-        // Instanciar agregar cliente
-        agregarCliente = (Button) getActivity().findViewById(R.id.AgregarCliente);
-
-        agregarCliente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment newClientesVistaFragment= new NuevoClienteVistaFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flContent, newClientesVistaFragment,"newClientesVistaFragment")
-                        .addToBackStack(null)
-                        .commit();
             }
         });
     }
 
-    private void AgregarClientesFiltradosRecyclerView() throws ExecutionException, InterruptedException {
-        String nombreSearchString = nombreSearch.getText().toString();
-        String apellidoSearchString = apellidoSearch.getText().toString();
-        String comentarioSearchString = comentarioSearch.getText().toString();
+
+    private void AgregarClientesFiltradosFichaServicioRecyclerView() throws ExecutionException, InterruptedException {
+
+        String nombreSearchString = fichaServicioNombreBuscador.getText().toString();
+        String apellidoSearchString = fichaServicioApellidoBuscador.getText().toString();
+        String comentarioSearchString = fichaServicioComentarioBuscador.getText().toString();
         if (nombreSearchString == "" && apellidoSearchString == "" && comentarioSearchString == "") {
             AgregarClientesRecyclerView();
         } else {
             // Agregar los Clientes de la base de datos al RecyclerView
-            recyclerClientes = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
-            recyclerClientes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            recyclerFichaServicio = (RecyclerView) getActivity().findViewById(R.id.FichaServicioClientesRecyclerId);
+            recyclerFichaServicio.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
             mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
             mClienteViewModel.getAllClientesBySearchParameters("%" + nombreSearchString + "%",
@@ -163,47 +154,50 @@ public class ClientesVistaFragment extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     Bundle bundle = new Bundle();
-                                    bundle.putInt("ClienteId", clientes.get(recyclerClientes.getChildAdapterPosition(v)).getId_cliente());
+                                    bundle.putInt("ClienteId", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getId_cliente());
+                                    bundle.putString("ClienteNombre", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getNombre());
+                                    bundle.putString("ClienteApellido", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getApellido());
 
-                                    Fragment editClientesVistaFragment= new EditClientesVistaFragment();
-                                    editClientesVistaFragment.setArguments(bundle);
+                                    Fragment nuevaFichaServicioVistaFragment= new NuevaFichaServicioVistaFragment();
+                                    nuevaFichaServicioVistaFragment.setArguments(bundle);
                                     getActivity().getSupportFragmentManager().beginTransaction()
-                                            .replace(R.id.flContent, editClientesVistaFragment,"editClientesVistaFragment")
-                                            .addToBackStack(null)
-                                            .commit();
+                                            .replace(R.id.flContent, nuevaFichaServicioVistaFragment,"nuevaFichaServicioVistaFragment")
+                                            .addToBackStack(null);
                                 }
                             });
-                            recyclerClientes.setAdapter(adapterClientes);
+                            recyclerFichaServicio.setAdapter(adapterClientes);
                         }
                     });
         }
     }
 
     private void AgregarClientesRecyclerView() throws ExecutionException, InterruptedException {
-        recyclerClientes = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
-        recyclerClientes.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerFichaServicio = (RecyclerView) getActivity().findViewById(R.id.FichaServicioClientesRecyclerId);
+        recyclerFichaServicio.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
 
         mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
         mClienteViewModel.getAllClientes().observe(this, new Observer<List<Cliente>>() {
             @Override
             public void onChanged(@Nullable final List<Cliente> clientes) {
-                ClienteAdapter adapterClientes =  new ClienteAdapter(clientes);
+                ClienteAdapter adapterClientes = new ClienteAdapter(clientes);
                 adapterClientes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putInt("ClienteId", clientes.get(recyclerClientes.getChildAdapterPosition(v)).getId_cliente());
+                        bundle.putInt("ClienteId", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getId_cliente());
+                        bundle.putString("ClienteNombre", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getNombre());
+                        bundle.putString("ClienteApellido", clientes.get(recyclerFichaServicio.getChildAdapterPosition(v)).getApellido());
 
-                        Fragment editClientesVistaFragment= new EditClientesVistaFragment();
-                        editClientesVistaFragment.setArguments(bundle);
+                        Fragment nuevaFichaServicioVistaFragment= new EditClientesVistaFragment();
+                        nuevaFichaServicioVistaFragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.flContent, editClientesVistaFragment,"editClientesVistaFragment")
-                                .addToBackStack(null)
-                                .commit();
+                                .replace(R.id.flContent, nuevaFichaServicioVistaFragment,"nuevaFichaServicioVistaFragment")
+                                .addToBackStack(null);
                     }
                 });
-                recyclerClientes.setAdapter(adapterClientes);
+                recyclerFichaServicio.setAdapter(adapterClientes);
             }
         });
     }
 }
+

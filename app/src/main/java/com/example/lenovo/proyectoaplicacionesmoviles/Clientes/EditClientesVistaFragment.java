@@ -41,7 +41,7 @@ public class EditClientesVistaFragment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_edit_clientes_vista, container, false);
+        return inflater.inflate(R.layout.fragment_editar_cliente_vista, container, false);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class EditClientesVistaFragment  extends Fragment {
 
         actualizarCliente = (Button) getActivity().findViewById(R.id.ActualizarCliente);
         eliminarCliente = (Button) getActivity().findViewById(R.id.EliminarCliente);
-        Log.d("mensaje", String.valueOf(cliente.getId_cliente()));
+
         actualizarCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
