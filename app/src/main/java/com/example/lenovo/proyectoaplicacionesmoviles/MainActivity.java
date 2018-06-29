@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Fragment fragment = null;
                 Class fragmentClass;
-                fragmentClass = InicioVistaFragment.class;
+                fragmentClass = AgendaVistaFragment.class;
                 try {
                     fragment = (Fragment) fragmentClass.newInstance();
                 } catch (Exception e) {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
                 // Set action bar title
-                setTitle("Inicio");
+                setTitle("Agenda");
                 // Close the navigation drawer
                 mDrawer.closeDrawers();
             }
