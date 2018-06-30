@@ -125,6 +125,7 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
                         bundle.putString("Tratamiento", tratamientoFichaServicio.getText().toString());
                         bundle.putInt("MedioPago", (int) medioPagoFichaServicio.getSelectedItemId());
                         bundle.putString("Comentario", comentarioFichaServicio.getText().toString());
+                        bundle.putString("Estado", "Agregando");
 
 
                         buscarClienteFichaServicioFragment.setArguments(bundle);
@@ -141,7 +142,7 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
                 int id_cliente = ClienteId;
                 String fecha_tratamiento = fechayHoraSeleccionadaFichaServicios.getText().toString();
                 String tratamiento = tratamientoFichaServicio.getText().toString();
-                String MedioPago = medioPagoFichaServicio.getSelectedItem().toString();
+                int MedioPago = medioPagoFichaServicio.getSelectedItemPosition();
                 int precio = 0;
                 if (!precioFichaServicio.getRawText().equals("")) {
                     precio = Integer.parseInt(precioFichaServicio.getRawText());

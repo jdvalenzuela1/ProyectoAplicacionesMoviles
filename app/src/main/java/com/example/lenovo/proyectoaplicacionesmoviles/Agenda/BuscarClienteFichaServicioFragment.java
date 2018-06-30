@@ -189,6 +189,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                                     bundle.putInt("MedioPago", medioPago);
                                     bundle.putString("Comentario", comentario);
                                     bundle.putInt("FichaServicioId", FichaServicioId);
+                                    bundle.putBoolean("DatosNuevos", true);
 
                                     if (estado.equals("Agregando")) {
                                         Fragment nuevaFichaServicioVistaFragment = new NuevaFichaServicioVistaFragment();
@@ -234,15 +235,26 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                         bundle.putInt("hora", hora);
                         bundle.putInt("minuto", minuto);
                         bundle.putInt("precio", precio);
+                        bundle.putString("Comentario", comentario);
                         bundle.putString("Tratamiento", tratamiento);
                         bundle.putInt("MedioPago", medioPago);
-                        bundle.putString("Comentario", comentario);
+                        bundle.putInt("FichaServicioId", FichaServicioId);
+                        bundle.putBoolean("DatosNuevos", true);
 
-                        Fragment nuevaFichaServicioVistaFragment= new NuevaFichaServicioVistaFragment();
-                        nuevaFichaServicioVistaFragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.flContent, nuevaFichaServicioVistaFragment,"nuevaFichaServicioVistaFragment")
-                                .addToBackStack(null).commit();
+                        if (estado.equals("Agregando")) {
+                            Fragment nuevaFichaServicioVistaFragment = new NuevaFichaServicioVistaFragment();
+                            nuevaFichaServicioVistaFragment.setArguments(bundle);
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.flContent, nuevaFichaServicioVistaFragment, "nuevaFichaServicioVistaFragment")
+                                    .addToBackStack(null).commit();
+                        } else {
+
+                            Fragment editarFichaServicioVistaFragment = new EditarFichaServicioVistaFragment();
+                            editarFichaServicioVistaFragment.setArguments(bundle);
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.flContent, editarFichaServicioVistaFragment, "editarFichaServicioVistaFragment")
+                                    .addToBackStack(null).commit();
+                        }
                     }
                 });
                 recyclerFichaServicio.setAdapter(adapterClientes);

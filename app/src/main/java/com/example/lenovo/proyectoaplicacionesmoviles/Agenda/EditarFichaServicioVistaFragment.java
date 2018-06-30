@@ -67,22 +67,69 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mediosPago = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicio);
+        mediosPago = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicioEditar);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(), R.array.mediosPago, android.R.layout.simple_spinner_item);
         mediosPago.setAdapter(adapter);
 
         final FichaServicioViewModel mFichaServicioViewProvider = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
 
-        buscarCliente = (Button) getActivity().findViewById(R.id.BuscarFichaServicioCliente);
-        nombreCliente = (TextView) getActivity().findViewById(R.id.NombreClienteFichaServicio);
-        apellidoCliente = (TextView) getActivity().findViewById(R.id.ApellidoClienteFichaServicio);
-        fechayHoraBotonFichaServicio = (Button) getActivity().findViewById(R.id.FechayHoraBotonFichaServicio);
-        fechayHoraSeleccionadaFichaServicios = (TextView) getActivity().findViewById(R.id.FechayHoraSeleccionadaFichaServicios);
-        tratamientoFichaServicio = (EditText) getActivity().findViewById(R.id.TratamientoFichaServicio);
+        buscarCliente = (Button) getActivity().findViewById(R.id.BuscarFichaServicioClienteEditar);
+        nombreCliente = (TextView) getActivity().findViewById(R.id.NombreClienteFichaServicioEditar);
+        apellidoCliente = (TextView) getActivity().findViewById(R.id.ApellidoClienteFichaServicioEditar);
+        fechayHoraBotonFichaServicio = (Button) getActivity().findViewById(R.id.FechayHoraBotonFichaServicioEditar);
+        fechayHoraSeleccionadaFichaServicios = (TextView) getActivity().findViewById(R.id.FechayHoraSeleccionadaFichaServiciosEditar);
+        tratamientoFichaServicio = (EditText) getActivity().findViewById(R.id.TratamientoFichaServicioEditar);
 
-        precioFichaServicio = (MaskEditText) getActivity().findViewById(R.id.PrecioFichaServicio);
-        medioPagoFichaServicio = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicio);
-        comentarioFichaServicio = (EditText) getActivity().findViewById(R.id.ComentarioFichaServicio);
+        precioFichaServicio = (MaskEditText) getActivity().findViewById(R.id.PrecioFichaServicioEditar);
+        medioPagoFichaServicio = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicioEditar);
+        comentarioFichaServicio = (EditText) getActivity().findViewById(R.id.ComentarioFichaServicioEditar);
+
+        Bundle bundle = getArguments();
+        FichaServicioId = bundle.getInt("FichaServicioId");
+
+        mFichaServicioViewModel = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
+
+        FichaServicio fichaServicio = null;
+        try {
+            fichaServicio = mFichaServicioViewModel.SelectFichaServicioByFichaServicioId(FichaServicioId);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (bundle.getBoolean("DatosNuevos")){
+            ClienteId = bundle.getInt("ClienteId");
+            precioFichaServicio.setText(Integer.toString(bundle.getInt("precio")));
+            nombreCliente.setText(bundle.getString("ClienteNombre"));
+            apellidoCliente.setText(bundle.getString("ClienteApellido"));
+            anio = bundle.getInt("anio");
+            mes = bundle.getInt("mes");
+            dia = bundle.getInt("dia");
+            hora = bundle.getInt("hora");
+            minuto = bundle.getInt("minuto");
+
+            fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" 00:00");
+            medioPagoFichaServicio.setSelection(bundle.getInt("MedioPago"));
+            tratamientoFichaServicio.setText(bundle.getString("Tratamiento"));
+            comentarioFichaServicio.setText(bundle.getString("Comentario"));
+
+
+        } else{
+            ClienteId = fichaServicio.getId_cliente();
+
+
+
+            nombreCliente.setText(bundle.getString("ClienteNombre"));
+            apellidoCliente.setText(bundle.getString("ClienteApellido"));
+            tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
+            precioFichaServicio.setText(Integer.toString(fichaServicio.getPrecio()));
+            String fecha = fichaServicio.getFecha();
+            String hora = fichaServicio.getHora();
+            medioPagoFichaServicio.setSelection(fichaServicio.getMedio_pago());
+            tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
+            comentarioFichaServicio.setText(fichaServicio.getComentario());
+        }
 
 
 
@@ -113,6 +160,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                 bundle.putInt("MedioPago", (int) medioPagoFichaServicio.getSelectedItemId());
                 bundle.putString("Comentario", comentarioFichaServicio.getText().toString());
                 bundle.putInt("FichaServicioId",FichaServicioId);
+                bundle.putString("Estado", "Editando");
 
 
                 buscarClienteFichaServicioFragment.setArguments(bundle);
@@ -124,27 +172,6 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
             }
         });
 
-
-        Bundle bundle = getArguments();
-        FichaServicioId = bundle.getInt("FichaServicioId");
-
-        mFichaServicioViewModel = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
-
-        FichaServicio fichaServicio = null;
-        try {
-            fichaServicio = mFichaServicioViewModel.SelectFichaServicioByFichaServicioId(FichaServicioId);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
-        precioFichaServicio.setText(fichaServicio.getPrecio());
-        comentarioFichaServicio.setText(fichaServicio.getMedio_pago());
-
-
-
         actualizarFichaServicio = (Button) getActivity().findViewById(R.id.ActualizarFichaServicio);
         eliminarFichaServicio  = (Button) getActivity().findViewById(R.id.EliminarFichaServicio);
 
@@ -155,7 +182,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                 int id_cliente = ClienteId;
                 String fecha_tratamiento = fechayHoraSeleccionadaFichaServicios.getText().toString();
                 String tratamiento = tratamientoFichaServicio.getText().toString();
-                String MedioPago = medioPagoFichaServicio.getSelectedItem().toString();
+                int MedioPago = medioPagoFichaServicio.getSelectedItemPosition();
                 int precio = 0;
                 if (!precioFichaServicio.getRawText().equals("")) {
                     precio = Integer.parseInt(precioFichaServicio.getRawText());

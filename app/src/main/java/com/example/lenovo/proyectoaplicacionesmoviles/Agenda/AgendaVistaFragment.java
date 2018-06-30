@@ -16,6 +16,8 @@ import android.widget.CalendarView;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditarClientesVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
+import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
+import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicio;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicioViewModel;
 
@@ -31,6 +33,7 @@ public class AgendaVistaFragment extends Fragment {
     private RecyclerView recyclerFichas;
     private Button agregarFichaServicio;
     private FichaServicioViewModel mFichaServicioViewModel;
+    private ClienteViewModel mClienteViewModel;
     private CalendarView calendario;
     private int anio, mes, dia;
 
@@ -53,6 +56,7 @@ public class AgendaVistaFragment extends Fragment {
             e.printStackTrace();
         }
 
+        mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
         agregarFichaServicio = (Button) getActivity().findViewById(R.id.AgregarFicha);
         calendario = (CalendarView) getActivity().findViewById(R.id.CalendarView);
 
@@ -82,7 +86,6 @@ public class AgendaVistaFragment extends Fragment {
                 bundle.putInt("anio", anio);
                 bundle.putInt("mes", mes);
                 bundle.putInt("dia", dia);
-                bundle.putString("Estado", "Agregando");
 
                 Fragment newFichaServicioVistaFragment = new NuevaFichaServicioVistaFragment();
                 newFichaServicioVistaFragment.setArguments(bundle);
@@ -109,9 +112,20 @@ public class AgendaVistaFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
+                        Cliente cliente = null;
+                        try {
+                            cliente = mClienteViewModel.SelectClienteByClienteId(fichaServicios.get(recyclerFichas.getChildAdapterPosition(v)).getId_cliente());
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         Bundle bundle = new Bundle();
                         bundle.putInt("FichaServicioId", fichaServicios.get(recyclerFichas.getChildAdapterPosition(v)).getId_ficha_servicio());
-                        bundle.putString("Estado", "Editando");
+                        bundle.putString("ClienteNombre", cliente.getNombre());
+                        bundle.putString("ClienteApellido", cliente.getApellido());
+
                         Fragment editarFichaServicioVistaFragment= new EditarFichaServicioVistaFragment();
                         editarFichaServicioVistaFragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()

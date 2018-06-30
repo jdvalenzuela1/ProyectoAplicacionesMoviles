@@ -32,7 +32,7 @@ public class FichaServicio {
     private int precio;
 
     @ColumnInfo(name = "medio_pago")
-    private String medio_pago;
+    private int medio_pago;
 
     @ColumnInfo(name = "comentario")
     private String comentario;
@@ -99,11 +99,11 @@ public class FichaServicio {
         this.precio = precio;
     }
 
-    public String getMedio_pago() {
+    public int getMedio_pago() {
         return medio_pago;
     }
 
-    public void setMedio_pago(String medio_pago) {
+    public void setMedio_pago(int medio_pago) {
 
         this.medio_pago = medio_pago;
     }

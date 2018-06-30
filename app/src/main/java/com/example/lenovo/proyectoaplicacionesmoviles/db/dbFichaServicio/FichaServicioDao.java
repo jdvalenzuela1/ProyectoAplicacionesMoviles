@@ -26,9 +26,6 @@ public interface FichaServicioDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(FichaServicio... fichaServicio);
 
-    @Insert
-    void insertOnlySingleFichaServicio(FichaServicio fichaServicio);
-
     @Query("DELETE FROM FichaServicio")
     void deleteAll();
 
