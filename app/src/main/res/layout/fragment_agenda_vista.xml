@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Agenda.AgendaVistaFragment"
-    android:background="@android:color/holo_blue_dark">
+    android:background="#F08080">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,15 +15,18 @@
             android:id="@+id/Agenda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Agenda General"
+            android:textSize="40px"
+            android:textAlignment="viewStart"
+            android:textColor="#FFFFFF"
             android:gravity="center"/>
-        <Button
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/AgregarFicha"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="@android:color/holo_red_light"
-            android:textColor="@color/colorAccent"
-            android:drawableBottom="@drawable/ic_menu"/>
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/plus_icon"
+            android:layout_margin="16dp"/>
         <LinearLayout
             android:id="@+id/Calendario"
             android:layout_width="match_parent"

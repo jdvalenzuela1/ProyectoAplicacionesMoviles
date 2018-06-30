@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.support.design.widget.FloatingActionButton;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditarClientesVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
@@ -57,7 +58,7 @@ public class AgendaVistaFragment extends Fragment {
         }
 
         mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
-        agregarFichaServicio = (Button) getActivity().findViewById(R.id.AgregarFicha);
+        FloatingActionButton agregarFichaServicio = getActivity().findViewById(R.id.AgregarFicha);
         calendario = (CalendarView) getActivity().findViewById(R.id.CalendarView);
 
         Calendar FechaActual = Calendar.getInstance();
