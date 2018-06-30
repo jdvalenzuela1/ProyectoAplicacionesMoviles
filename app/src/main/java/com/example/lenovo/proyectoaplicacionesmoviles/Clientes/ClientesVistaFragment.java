@@ -151,6 +151,7 @@ public class ClientesVistaFragment extends Fragment {
             // Agregar los Clientes de la base de datos al RecyclerView
             recyclerClientes = (RecyclerView) getActivity().findViewById(R.id.ClientesRecyclerId);
             recyclerClientes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            recyclerClientes.setHasFixedSize(true);
 
             mClienteViewModel = ViewModelProviders.of(getActivity()).get(ClienteViewModel.class);
             mClienteViewModel.getAllClientesBySearchParameters("%" + nombreSearchString + "%",

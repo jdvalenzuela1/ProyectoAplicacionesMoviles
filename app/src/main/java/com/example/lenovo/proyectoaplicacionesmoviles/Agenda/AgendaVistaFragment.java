@@ -101,6 +101,7 @@ public class AgendaVistaFragment extends Fragment {
     private void AgregarFichasRecyclerView() throws ExecutionException, InterruptedException {
         recyclerFichas = (RecyclerView) getActivity().findViewById(R.id.FichasRecyclerId);
         recyclerFichas.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerFichas.setHasFixedSize(true);
 
         mFichaServicioViewModel = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
         mFichaServicioViewModel.getAllFichaServicio().observe(this, new Observer<List<FichaServicio>>() {
