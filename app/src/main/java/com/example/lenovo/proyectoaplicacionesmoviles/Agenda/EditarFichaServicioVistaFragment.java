@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,20 +22,23 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
+import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
+import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicio;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicioViewModel;
 import com.santalu.maskedittext.MaskEditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 /**
- * Created by lenovo on 26-06-2018.
+ * Created by lenovo on 30-06-2018.
  */
 
-public class NuevaFichaServicioVistaFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class EditarFichaServicioVistaFragment  extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+
     Spinner mediosPago;
-    private Button guardarFichaServicio;
     private Button fechayHoraBotonFichaServicio;
     private Button buscarCliente;
     private int ClienteId;
@@ -48,11 +52,16 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
     private int diaFinal, mesFinal, anioFinal, horaFinal, minutoFinal;
     private MaskEditText precioFichaServicio;
 
+    private FichaServicioViewModel mFichaServicioViewModel;
+    private Button actualizarFichaServicio;
+    private Button eliminarFichaServicio;
+    private int FichaServicioId;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nueva_ficha_servicio_vista, container, false);
+        return inflater.inflate(R.layout.fragment_editar_ficha_servicio_vista, container, false);
     }
 
     @Override
@@ -64,7 +73,6 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
 
         final FichaServicioViewModel mFichaServicioViewProvider = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
 
-        guardarFichaServicio = (Button) getActivity().findViewById(R.id.GuardarFichaServicio);
         buscarCliente = (Button) getActivity().findViewById(R.id.BuscarFichaServicioCliente);
         nombreCliente = (TextView) getActivity().findViewById(R.id.NombreClienteFichaServicio);
         apellidoCliente = (TextView) getActivity().findViewById(R.id.ApellidoClienteFichaServicio);
@@ -77,67 +85,73 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         comentarioFichaServicio = (EditText) getActivity().findViewById(R.id.ComentarioFichaServicio);
 
 
-        Bundle bundle = getArguments();
-        ClienteId = bundle.getInt("ClienteId");
-        String ClienteNombre = bundle.getString("ClienteNombre");
-        String ClienteApellido = bundle.getString("ClienteApellido");
-        anio = bundle.getInt("anio");
-        mes = bundle.getInt("mes");
-        dia = bundle.getInt("dia");
-        hora = bundle.getInt("hora");
-        minuto = bundle.getInt("minuto");
-        tratamientoFichaServicio.setText(bundle.getString("Tratamiento"));
-        medioPagoFichaServicio.setSelection(bundle.getInt("MedioPago"));
-        int precioTemp = bundle.getInt("precio");
-        if (precioTemp != 0) {
-            precioFichaServicio.setText(Integer.toString(precioTemp));
-        }
-
-        comentarioFichaServicio.setText(bundle.getString("Comentario"));
-        nombreCliente.setText(ClienteNombre);
-        apellidoCliente.setText(ClienteApellido);
-
-        fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" 00:00");
 
         fechayHoraBotonFichaServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), NuevaFichaServicioVistaFragment.this, anio, mes, dia);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), EditarFichaServicioVistaFragment.this, anio, mes, dia);
                 datePickerDialog.show();
             }
         });
         buscarCliente.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Fragment buscarClienteFichaServicioFragment= new BuscarClienteFichaServicioFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("anio", anio);
-                        bundle.putInt("mes", mes);
-                        bundle.putInt("dia", dia);
-                        String precio = precioFichaServicio.getRawText();
-                        if (precio.equals("")){
-                            bundle.putInt("precio", 0);
-                        } else {
-                            bundle.putInt("precio", Integer.parseInt(precio));
-                        }
-                        bundle.putString("Tratamiento", tratamientoFichaServicio.getText().toString());
-                        bundle.putInt("MedioPago", (int) medioPagoFichaServicio.getSelectedItemId());
-                        bundle.putString("Comentario", comentarioFichaServicio.getText().toString());
-
-
-                        buscarClienteFichaServicioFragment.setArguments(bundle);
-
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.flContent, buscarClienteFichaServicioFragment,"buscarClienteFichaServicioFragment")
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                });
-        guardarFichaServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Fragment buscarClienteFichaServicioFragment= new BuscarClienteFichaServicioFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("anio", anio);
+                bundle.putInt("mes", mes);
+                bundle.putInt("dia", dia);
+                String precio = precioFichaServicio.getRawText();
+                if (precio.equals("")){
+                    bundle.putInt("precio", 0);
+                } else {
+                    bundle.putInt("precio", Integer.parseInt(precio));
+                }
+                bundle.putString("Tratamiento", tratamientoFichaServicio.getText().toString());
+                bundle.putInt("MedioPago", (int) medioPagoFichaServicio.getSelectedItemId());
+                bundle.putString("Comentario", comentarioFichaServicio.getText().toString());
+                bundle.putInt("FichaServicioId",FichaServicioId);
+
+
+                buscarClienteFichaServicioFragment.setArguments(bundle);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flContent, buscarClienteFichaServicioFragment,"buscarClienteFichaServicioFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+
+        Bundle bundle = getArguments();
+        FichaServicioId = bundle.getInt("FichaServicioId");
+
+        mFichaServicioViewModel = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
+
+        FichaServicio fichaServicio = null;
+        try {
+            fichaServicio = mFichaServicioViewModel.SelectFichaServicioByFichaServicioId(FichaServicioId);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
+        precioFichaServicio.setText(fichaServicio.getPrecio());
+        comentarioFichaServicio.setText(fichaServicio.getMedio_pago());
+
+
+
+        actualizarFichaServicio = (Button) getActivity().findViewById(R.id.ActualizarFichaServicio);
+        eliminarFichaServicio  = (Button) getActivity().findViewById(R.id.EliminarFichaServicio);
+
+        actualizarFichaServicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 int id_cliente = ClienteId;
                 String fecha_tratamiento = fechayHoraSeleccionadaFichaServicios.getText().toString();
                 String tratamiento = tratamientoFichaServicio.getText().toString();
@@ -159,12 +173,8 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
                     fichaServicio.setComentario(comentario);
 
 
-
-                    ArrayList<FichaServicio> listaFichaServicio = new ArrayList<FichaServicio>();
-                    listaFichaServicio.add(fichaServicio);
-
-                    mFichaServicioViewProvider.insert(listaFichaServicio);
-                    Toast.makeText(getActivity(), "Tratamiento Guardado con exito", Toast.LENGTH_LONG).show();
+                    mFichaServicioViewProvider.updateFichaServicio(fichaServicio);
+                    Toast.makeText(getActivity(), "Tratamiento actualizado con exito", Toast.LENGTH_LONG).show();
 
                     Fragment agendaVistaFragment= new AgendaVistaFragment();
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -182,11 +192,23 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
                     Toast dato_tratamiento = Toast.makeText(getActivity(), "El tratamiento es un campo obligatorio", Toast.LENGTH_SHORT);
                     dato_tratamiento.show();
                 }
+
             }
         });
+        eliminarFichaServicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFichaServicioViewModel.deleteFichaServicioByFichaServicioId(FichaServicioId);
+                Toast.makeText(getActivity(), "Ficha de Servicio eliminada con exito", Toast.LENGTH_LONG).show();
+                Fragment agendaVistaFragment= new AgendaVistaFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flContent, agendaVistaFragment,"agendaVistaFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
     }
-
-
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -199,7 +221,7 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         minuto = calendarFichaServicio.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                NuevaFichaServicioVistaFragment.this, hora, minuto, DateFormat.is24HourFormat(getActivity().getBaseContext()));
+                EditarFichaServicioVistaFragment.this, hora, minuto, DateFormat.is24HourFormat(getActivity().getBaseContext()));
         timePickerDialog.show();
 
     }

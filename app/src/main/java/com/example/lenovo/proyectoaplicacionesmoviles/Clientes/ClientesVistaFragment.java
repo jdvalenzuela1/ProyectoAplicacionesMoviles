@@ -165,7 +165,7 @@ public class ClientesVistaFragment extends Fragment {
                                     Bundle bundle = new Bundle();
                                     bundle.putInt("ClienteId", clientes.get(recyclerClientes.getChildAdapterPosition(v)).getId_cliente());
 
-                                    Fragment editClientesVistaFragment= new EditClientesVistaFragment();
+                                    Fragment editClientesVistaFragment= new EditarClientesVistaFragment();
                                     editClientesVistaFragment.setArguments(bundle);
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .replace(R.id.flContent, editClientesVistaFragment,"editClientesVistaFragment")
@@ -194,7 +194,7 @@ public class ClientesVistaFragment extends Fragment {
                         Bundle bundle = new Bundle();
                         bundle.putInt("ClienteId", clientes.get(recyclerClientes.getChildAdapterPosition(v)).getId_cliente());
 
-                        Fragment editClientesVistaFragment= new EditClientesVistaFragment();
+                        Fragment editClientesVistaFragment= new EditarClientesVistaFragment();
                         editClientesVistaFragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.flContent, editClientesVistaFragment,"editClientesVistaFragment")

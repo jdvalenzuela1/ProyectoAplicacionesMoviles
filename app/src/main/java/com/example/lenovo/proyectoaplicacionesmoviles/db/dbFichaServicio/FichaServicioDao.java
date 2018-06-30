@@ -36,5 +36,5 @@ public interface FichaServicioDao {
     void deleteFichaServicioByFichaServicioId(int id_ficha_servicio);
 
     @Update
-    void update(Cliente cliente);
+    void update(FichaServicio fichaServicio);
 }

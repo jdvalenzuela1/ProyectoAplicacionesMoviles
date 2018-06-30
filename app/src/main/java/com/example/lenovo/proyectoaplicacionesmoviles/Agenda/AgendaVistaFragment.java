@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 
-import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditClientesVistaFragment;
+import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditarClientesVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicio;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicioViewModel;
@@ -82,6 +82,7 @@ public class AgendaVistaFragment extends Fragment {
                 bundle.putInt("anio", anio);
                 bundle.putInt("mes", mes);
                 bundle.putInt("dia", dia);
+                bundle.putString("Estado", "Agregando");
 
                 Fragment newFichaServicioVistaFragment = new NuevaFichaServicioVistaFragment();
                 newFichaServicioVistaFragment.setArguments(bundle);
@@ -107,16 +108,17 @@ public class AgendaVistaFragment extends Fragment {
                 adapterFichaServicio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         Bundle bundle = new Bundle();
                         bundle.putInt("FichaServicioId", fichaServicios.get(recyclerFichas.getChildAdapterPosition(v)).getId_ficha_servicio());
-/*
-                        Fragment editFichaServicioVistaFragment= new editFichaServicioVistaFragment();
-                        editFichaServicioVistaFragment.setArguments(bundle);
+                        bundle.putString("Estado", "Editando");
+                        Fragment editarFichaServicioVistaFragment= new EditarFichaServicioVistaFragment();
+                        editarFichaServicioVistaFragment.setArguments(bundle);
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.flContent, editFichaServicioVistaFragment,"editFichaServicioVistaFragment")
+                                .replace(R.id.flContent, editarFichaServicioVistaFragment,"editarFichaServicioVistaFragment")
                                 .addToBackStack(null)
                                 .commit();
-                                */
+
                     }
                 });
                 recyclerFichas.setAdapter(adapterFichaServicio);

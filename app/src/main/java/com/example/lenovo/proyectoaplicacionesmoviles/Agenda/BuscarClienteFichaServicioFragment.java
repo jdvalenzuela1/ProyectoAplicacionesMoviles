@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.ClienteAdapter;
-import com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditClientesVistaFragment;
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
@@ -36,6 +34,9 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
     private EditText fichaServicioNombreBuscador;
     private EditText fichaServicioApellidoBuscador;
     private EditText fichaServicioComentarioBuscador;
+
+    private String estado;
+    private int FichaServicioId;
 
     private int anio, mes, dia, hora, minuto;
     private int medioPago, precio;
@@ -69,9 +70,11 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
         hora = bundle.getInt("hora");
         minuto = bundle.getInt("minuto");
         precio = bundle.getInt("precio");
+        FichaServicioId = bundle.getInt("FichaServicioId");
         tratamiento = bundle.getString("Tratamiento");
         medioPago = bundle.getInt("MedioPago");
         comentario = bundle.getString("Comentario");
+        estado = bundle.getString("Estado");
         // Inicializar los filtros de busqueda
         fichaServicioNombreBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioNombreBuscador);
         fichaServicioApellidoBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioApellidoBuscador);
@@ -185,12 +188,22 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                                     bundle.putString("Tratamiento", tratamiento);
                                     bundle.putInt("MedioPago", medioPago);
                                     bundle.putString("Comentario", comentario);
+                                    bundle.putInt("FichaServicioId", FichaServicioId);
 
-                                    Fragment nuevaFichaServicioVistaFragment= new NuevaFichaServicioVistaFragment();
-                                    nuevaFichaServicioVistaFragment.setArguments(bundle);
-                                    getActivity().getSupportFragmentManager().beginTransaction()
-                                            .replace(R.id.flContent, nuevaFichaServicioVistaFragment,"nuevaFichaServicioVistaFragment")
-                                            .addToBackStack(null).commit();
+                                    if (estado.equals("Agregando")) {
+                                        Fragment nuevaFichaServicioVistaFragment = new NuevaFichaServicioVistaFragment();
+                                        nuevaFichaServicioVistaFragment.setArguments(bundle);
+                                        getActivity().getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.flContent, nuevaFichaServicioVistaFragment, "nuevaFichaServicioVistaFragment")
+                                                .addToBackStack(null).commit();
+                                    } else {
+
+                                        Fragment editarFichaServicioVistaFragment = new EditarFichaServicioVistaFragment();
+                                        editarFichaServicioVistaFragment.setArguments(bundle);
+                                        getActivity().getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.flContent, editarFichaServicioVistaFragment, "editarFichaServicioVistaFragment")
+                                                .addToBackStack(null).commit();
+                                    }
                                 }
                             });
                             recyclerFichaServicio.setAdapter(adapterClientes);

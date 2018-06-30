@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Agenda.NuevaFichaServicioVistaFragment"
     android:background="@android:color/holo_red_dark">
 
@@ -12,12 +11,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
         <TextView
-            android:id="@+id/NuevaFichaServicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nueva Ficha de Servicio"/>
+            android:text="Editar Ficha de Servicio"/>
         <Button
-            android:id="@+id/BuscarFichaServicioCliente"
+            android:id="@+id/BuscarFichaServicioClienteEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:shadowColor="@android:color/holo_red_light"
@@ -25,15 +23,15 @@
             android:text="Buscar Cliente"
             android:drawableBottom="@drawable/ic_menu"/>
         <TextView
-            android:id="@+id/NombreClienteFichaServicio"
+            android:id="@+id/NombreClienteFichaServicioEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/ApellidoClienteFichaServicio"
+            android:id="@+id/ApellidoClienteFichaServicioEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/TratamientoFichaServicio"
+            android:id="@+id/TratamientoFichaServicioEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Tratamiento del cliente"/>
@@ -42,11 +40,11 @@
             android:layout_height="wrap_content"
             android:text="Fecha del Tratamiento: "/>
         <TextView
-            android:id="@+id/FechayHoraSeleccionadaFichaServicios"
+            android:id="@+id/FechayHoraSeleccionadaFichaServiciosEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/FechayHoraBotonFichaServicio"
+            android:id="@+id/FechayHoraBotonFichaServicioEditar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:drawableBottom="@drawable/ic_menu"/>
@@ -55,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="Precio del Tratamiento"/>
         <com.santalu.maskedittext.MaskEditText
-            android:id="@+id/PrecioFichaServicio"
+            android:id="@+id/PrecioFichaServicioEditar"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:inputType="numberSigned"/>
@@ -64,21 +62,27 @@
             android:layout_height="wrap_content"
             android:text="Medio de pago"/>
         <Spinner
-            android:id="@+id/MedioPagoFichaServicio"
+            android:id="@+id/MedioPagoFichaServicioEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/ComentarioFichaServicio"
+            android:id="@+id/ComentarioFichaServicioEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Comentario de la Ficha de servicio"/>
         <Button
-            android:id="@+id/GuardarFichaServicio"
+            android:id="@+id/ActualizarFichaServicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
-            android:text="Guardar"
+            android:text="Actualizar"
+            android:drawableBottom="@drawable/ic_menu"/>
+        <Button
+            android:id="@+id/EliminarFichaServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="Eliminar"
             android:drawableBottom="@drawable/ic_menu"/>
     </LinearLayout>
 </FrameLayout>

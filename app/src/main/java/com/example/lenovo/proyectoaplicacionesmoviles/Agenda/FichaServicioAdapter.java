@@ -71,8 +71,9 @@ public class FichaServicioAdapter extends RecyclerView.Adapter<FichaServicioAdap
         }
 
         public void asignarDatos(FichaServicio fichaServicio) {
-            NombreClienteAdapter.setText(fichaServicio.getId_cliente());
-            ApellidoClienteAdapter.setText(fichaServicio.getId_cliente());
+
+            NombreClienteAdapter.setText("raul");
+            ApellidoClienteAdapter.setText("raula");
             HoraAdapter.setText(fichaServicio.getHora());
             TratamientoAdapter.setText(fichaServicio.getTratamiento());
         }

@@ -26,4 +26,16 @@ public class FichaServicioViewModel extends AndroidViewModel {
     public LiveData<List<FichaServicio>> getAllFichaServicio() throws ExecutionException, InterruptedException {
         return mRepository.getAllFichaServicio();
     }
+    public FichaServicio SelectFichaServicioByFichaServicioId(int id_ficha_servicio) throws ExecutionException, InterruptedException {
+        return mRepository.SelectFichaServicioByFichaServicioId(id_ficha_servicio);
+    }
+    public void deleteFichaServicioByFichaServicioId(int id_ficha_servicio){
+        mRepository.deleteFichaServicioByFichaServicioId(id_ficha_servicio);
+    }
+    public void updateFichaServicio(FichaServicio fichaServicio){
+        mRepository.updateFichaServicio(fichaServicio);
+    }
+    public void insert(List<FichaServicio> fichaServicio) {
+        mRepository.insert(fichaServicio);
+    }
 }

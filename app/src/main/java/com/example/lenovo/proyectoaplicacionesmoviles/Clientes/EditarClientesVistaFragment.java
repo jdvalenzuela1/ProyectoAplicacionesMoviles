@@ -19,13 +19,16 @@ import com.example.lenovo.proyectoaplicacionesmoviles.R;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by lenovo on 07-06-2018.
  */
 
-public class EditClientesVistaFragment  extends Fragment {
+public class EditarClientesVistaFragment extends Fragment {
 
     private int clienteId;
     private TextView fechaCreacion;
@@ -80,17 +83,37 @@ public class EditClientesVistaFragment  extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Cliente cliente = new Cliente();
-                cliente.setId_cliente(clienteId);
-                cliente.setNombre(editNombreCliente.getText().toString());
-                cliente.setApellido(editApellidoCliente.getText().toString());
-                cliente.setEmail(editEmailCliente.getText().toString());
-                cliente.setComentario(editComentarioCliente.getText().toString());
-                cliente.setFecha_creacion(fechaCreacion.getText().toString());
-                mClienteViewModel.updateCliente(cliente);
-                Toast.makeText(getActivity(), "Cliente actualizado con exito", Toast.LENGTH_LONG).show();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.popBackStack();
+                if (editNombreCliente.getText().toString().equals("") && editApellidoCliente.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Nombre y Apellido son campos obligatorio", Toast.LENGTH_LONG).show();
+                } else if (editApellidoCliente.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Apellido es un campo obligatorio", Toast.LENGTH_LONG).show();
+                } else if (editNombreCliente.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Nombre es un campo obligatorio", Toast.LENGTH_LONG).show();
+                } else {
+
+                    String nombreClienteString = editNombreCliente.getText().toString();
+                    String apellidoClienteString = editApellidoCliente.getText().toString();
+                    String emailClienteString = editEmailCliente.getText().toString();
+                    String comentarioClienteString = editComentarioCliente.getText().toString();
+
+                    Cliente cliente = new Cliente();
+                    cliente.setId_cliente(clienteId);
+                    cliente.setNombre(nombreClienteString);
+                    cliente.setApellido(apellidoClienteString);
+                    cliente.setEmail(emailClienteString);
+                    cliente.setComentario(comentarioClienteString);
+                    cliente.setFecha_creacion(fechaCreacion.getText().toString());
+
+                    ArrayList<Cliente> listaCliente = new ArrayList<Cliente>();
+                    listaCliente.add(cliente);
+
+                    mClienteViewModel.updateCliente(cliente);
+                    Toast.makeText(getActivity(), "Cliente Guardado con exito", Toast.LENGTH_LONG).show();
+
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.popBackStack();
+                }
+
             }
         });
         eliminarCliente.setOnClickListener(new View.OnClickListener() {
