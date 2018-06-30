@@ -22,8 +22,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
-import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
-import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteViewModel;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicio;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbFichaServicio.FichaServicioViewModel;
 import com.santalu.maskedittext.MaskEditText;
@@ -109,7 +107,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
             hora = bundle.getInt("hora");
             minuto = bundle.getInt("minuto");
 
-            fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" 00:00");
+            fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
             medioPagoFichaServicio.setSelection(bundle.getInt("MedioPago"));
             tratamientoFichaServicio.setText(bundle.getString("Tratamiento"));
             comentarioFichaServicio.setText(bundle.getString("Comentario"));
@@ -117,21 +115,24 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
 
         } else{
             ClienteId = fichaServicio.getId_cliente();
-
-
-
             nombreCliente.setText(bundle.getString("ClienteNombre"));
             apellidoCliente.setText(bundle.getString("ClienteApellido"));
             tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
             precioFichaServicio.setText(Integer.toString(fichaServicio.getPrecio()));
-            String fecha = fichaServicio.getFecha();
-            String hora = fichaServicio.getHora();
+            String[] fecha_db = fichaServicio.getFecha().split("/");
+            String[] hora_db = fichaServicio.getHora().split(":");
+
+            dia = Integer.parseInt(fecha_db[0]);
+            mes = Integer.parseInt(fecha_db[1]);
+            anio = Integer.parseInt(fecha_db[2]);
+            hora = Integer.parseInt(hora_db[0]);
+            minuto = Integer.parseInt(hora_db[1]);
+
+            fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
             medioPagoFichaServicio.setSelection(fichaServicio.getMedio_pago());
             tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
             comentarioFichaServicio.setText(fichaServicio.getComentario());
         }
-
-
 
         fechayHoraBotonFichaServicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,9 +240,9 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        anioFinal = year;
-        mesFinal = month;
-        diaFinal = dayOfMonth;
+        anio = year;
+        mes = month;
+        dia = dayOfMonth;
 
         Calendar calendarFichaServicio = Calendar.getInstance();
         hora = calendarFichaServicio.get(Calendar.HOUR_OF_DAY);
@@ -255,9 +256,9 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        horaFinal = hourOfDay;
-        minutoFinal = minute;
+        hora = hourOfDay;
+        minuto = minute;
 
-        fechayHoraSeleccionadaFichaServicios.setText(diaFinal+"/"+mesFinal+"/"+anioFinal+" "+horaFinal+":"+minutoFinal);
+        fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+hora+":"+minuto);
     }
 }
