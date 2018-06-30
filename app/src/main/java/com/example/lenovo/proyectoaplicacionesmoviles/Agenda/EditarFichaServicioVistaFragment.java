@@ -128,7 +128,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
             hora = Integer.parseInt(hora_db[0]);
             minuto = Integer.parseInt(hora_db[1]);
 
-            fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
+            fechayHoraSeleccionadaFichaServicios.setText(String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
             medioPagoFichaServicio.setSelection(fichaServicio.getMedio_pago());
             tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
             comentarioFichaServicio.setText(fichaServicio.getComentario());
@@ -181,7 +181,9 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
             public void onClick(View v) {
 
                 int id_cliente = ClienteId;
-                String fecha_tratamiento = fechayHoraSeleccionadaFichaServicios.getText().toString();
+                String fecha_tratamiento = String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+String.format("%02d", anio);
+                String hora_tratamiento = String.format("%02d", hora) + ":" + String.format("%02d", minuto);
+
                 String tratamiento = tratamientoFichaServicio.getText().toString();
                 int MedioPago = medioPagoFichaServicio.getSelectedItemPosition();
                 int precio = 0;
@@ -193,8 +195,10 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                 if (id_cliente != 0 && !tratamiento.equals("")) {
                     String x = "";
                     FichaServicio fichaServicio = new FichaServicio();
+                    fichaServicio.setId_ficha_servicio(FichaServicioId);
                     fichaServicio.setId_cliente(id_cliente);
                     fichaServicio.setFecha(fecha_tratamiento);
+                    fichaServicio.setHora(hora_tratamiento);
                     fichaServicio.setTratamiento(tratamiento);
                     fichaServicio.setMedio_pago(MedioPago);
                     fichaServicio.setPrecio(precio);
@@ -259,6 +263,6 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
         hora = hourOfDay;
         minuto = minute;
 
-        fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+hora+":"+minuto);
+        fechayHoraSeleccionadaFichaServicios.setText(String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
     }
 }

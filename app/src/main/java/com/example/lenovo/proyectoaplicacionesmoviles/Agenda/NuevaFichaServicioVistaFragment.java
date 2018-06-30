@@ -98,7 +98,7 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         nombreCliente.setText(ClienteNombre);
         apellidoCliente.setText(ClienteApellido);
 
-        fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
+        fechayHoraSeleccionadaFichaServicios.setText(String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
 
         fechayHoraBotonFichaServicio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,8 +144,8 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
             public void onClick(View v) {
                 int id_cliente = ClienteId;
 
-                String fecha_tratamiento = dia+"/"+mes+"/"+anio;
-                String hora_tratamiento = hora+":"+minuto;
+                String fecha_tratamiento = String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+String.format("%02d", anio);
+                String hora_tratamiento = String.format("%02d", hora) + ":" + String.format("%02d", minuto);
 
                 String tratamiento = tratamientoFichaServicio.getText().toString();
                 int MedioPago = medioPagoFichaServicio.getSelectedItemPosition();
@@ -217,6 +217,6 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         hora = hourOfDay;
         minuto = minute;
 
-        fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+hora+":"+minuto);
+        fechayHoraSeleccionadaFichaServicios.setText(String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
     }
 }

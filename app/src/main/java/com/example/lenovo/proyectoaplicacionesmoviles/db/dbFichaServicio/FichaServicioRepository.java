@@ -9,6 +9,7 @@ import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.Cliente;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteDao;
 import com.example.lenovo.proyectoaplicacionesmoviles.db.dbCliente.ClienteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -52,6 +53,16 @@ public class FichaServicioRepository {
         new FichaServicioRepository.insertAsyncTask(mFichaServicioDao).execute(fichaServiciosArray);
     }
 
+    public LiveData<List<FichaServicio>> getAllFichaServicioByParameters(int dia, int mes, int anio) throws ExecutionException, InterruptedException {
+        List<Integer> parametros = new ArrayList<Integer>();
+        parametros.add(dia);
+        parametros.add(mes);
+        parametros.add(anio);
+
+        AsyncTask<List<Integer>, Void, LiveData<List<FichaServicio>>> asyncTask = new FichaServicioRepository.getAllFichaServicioByParametersAsyncTask(mFichaServicioDao).execute(parametros);
+        return asyncTask.get();
+    }
+
     private static class getAllFichaServicioAsyncTask extends AsyncTask<Void, Void, LiveData<List<FichaServicio>>> {
 
         private FichaServicioDao mAsyncTaskDao;
@@ -66,6 +77,7 @@ public class FichaServicioRepository {
             return FichaServicio;
         }
     }
+
     private static class insertAsyncTask extends AsyncTask<FichaServicio, Void, Void> {
 
         private FichaServicioDao mAsyncTaskDao;
@@ -80,6 +92,7 @@ public class FichaServicioRepository {
             return null;
         }
     }
+
     private static class selectFichaServicioByFichaServicioIdAsyncTask extends AsyncTask<Integer, Void, FichaServicio> {
 
         private FichaServicioDao mAsyncTaskDao;
@@ -109,6 +122,7 @@ public class FichaServicioRepository {
             return null;
         }
     }
+
     private static class updateFichaServicioAsyncTask extends AsyncTask<FichaServicio, Void, Void> {
 
         private FichaServicioDao mAsyncTaskDao;
@@ -122,6 +136,26 @@ public class FichaServicioRepository {
 
             mAsyncTaskDao.update(params[0]);
             return null;
+        }
+    }
+
+    public class getAllFichaServicioByParametersAsyncTask extends AsyncTask<List<Integer>,  Void, LiveData<List<FichaServicio>>> {
+
+        private FichaServicioDao mAsyncTaskDao;
+
+        getAllFichaServicioByParametersAsyncTask(FichaServicioDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected LiveData<List<FichaServicio>> doInBackground(List<Integer>[] lists) {
+            List<Integer> parametros = new ArrayList<Integer>();
+            parametros = lists[0];
+            Integer dia = parametros.get(0);
+            Integer mes = parametros.get(1);
+            Integer anio = parametros.get(2);
+            String fecha_tratamiento = String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+String.format("%02d", anio);
+            return mAsyncTaskDao.getAllFichaServicioByParameters(fecha_tratamiento);
         }
     }
 }

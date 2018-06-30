@@ -48,13 +48,7 @@ public class AgendaVistaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        try {
-            AgregarFichasRecyclerView();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
 
         mClienteViewModel = ViewModelProviders.of(this).get(ClienteViewModel.class);
         agregarFichaServicio = (Button) getActivity().findViewById(R.id.AgregarFicha);
@@ -65,6 +59,14 @@ public class AgendaVistaFragment extends Fragment {
         mes = FechaActual.get(Calendar.MONTH);
         dia = FechaActual.get(Calendar.DAY_OF_MONTH);
 
+        try {
+            AgregarFichasRecyclerView(dia, mes, anio);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
@@ -72,9 +74,13 @@ public class AgendaVistaFragment extends Fragment {
                 anio = year;
                 mes = month;
                 dia = dayOfMonth;
-                // TODO Auto-generated method stub
-
-                // Se genera el recycler view de las fichas de dicho dia
+                try {
+                    AgregarFichasRecyclerView(dia, mes, anio);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -98,12 +104,12 @@ public class AgendaVistaFragment extends Fragment {
         });
     }
 
-    private void AgregarFichasRecyclerView() throws ExecutionException, InterruptedException {
+    private void AgregarFichasRecyclerView(int dia, int mes, int anio) throws ExecutionException, InterruptedException {
         recyclerFichas = (RecyclerView) getActivity().findViewById(R.id.FichasRecyclerId);
         recyclerFichas.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
 
         mFichaServicioViewModel = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
-        mFichaServicioViewModel.getAllFichaServicio().observe(this, new Observer<List<FichaServicio>>() {
+        mFichaServicioViewModel.getAllFichaServicioByParameters(dia, mes, anio).observe(this, new Observer<List<FichaServicio>>() {
 
             @Override
             public void onChanged(@Nullable final List<FichaServicio> fichaServicios) {
@@ -111,6 +117,8 @@ public class AgendaVistaFragment extends Fragment {
                 adapterFichaServicio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        String hora = fichaServicios.get(recyclerFichas.getChildAdapterPosition(v)).getHora();
 
                         Cliente cliente = null;
                         try {

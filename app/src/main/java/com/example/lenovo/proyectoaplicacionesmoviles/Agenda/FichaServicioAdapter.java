@@ -91,6 +91,7 @@ public class FichaServicioAdapter extends RecyclerView.Adapter<FichaServicioAdap
 
             NombreClienteAdapter.setText(cliente.getNombre());
             ApellidoClienteAdapter.setText(cliente.getApellido());
+            String hora = fichaServicio.getHora();
             HoraAdapter.setText(fichaServicio.getHora());
             TratamientoAdapter.setText(fichaServicio.getTratamiento());
         }

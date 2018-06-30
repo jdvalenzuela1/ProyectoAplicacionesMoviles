@@ -38,4 +38,8 @@ public class FichaServicioViewModel extends AndroidViewModel {
     public void insert(List<FichaServicio> fichaServicio) {
         mRepository.insert(fichaServicio);
     }
+
+    public LiveData<List<FichaServicio>> getAllFichaServicioByParameters(int dia, int mes, int anio) throws ExecutionException, InterruptedException {
+        return mRepository.getAllFichaServicioByParameters(dia, mes, anio);
+    }
 }
