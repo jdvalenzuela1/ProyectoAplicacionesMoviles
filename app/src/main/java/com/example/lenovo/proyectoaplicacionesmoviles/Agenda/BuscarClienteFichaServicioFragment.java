@@ -40,6 +40,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
 
     private int anio, mes, dia, hora, minuto;
     private int medioPago, precio;
+    private boolean pago;
     private String tratamiento, comentario;
 
 
@@ -74,6 +75,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
         tratamiento = bundle.getString("Tratamiento");
         medioPago = bundle.getInt("MedioPago");
         comentario = bundle.getString("Comentario");
+        pago = bundle.getBoolean("Pago");
         estado = bundle.getString("Estado");
         // Inicializar los filtros de busqueda
         fichaServicioNombreBuscador = (EditText) getActivity().findViewById(R.id.FichaServicioNombreBuscador);
@@ -188,6 +190,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                                     bundle.putString("Tratamiento", tratamiento);
                                     bundle.putInt("MedioPago", medioPago);
                                     bundle.putString("Comentario", comentario);
+                                    bundle.putBoolean("Pago", pago);
                                     bundle.putInt("FichaServicioId", FichaServicioId);
                                     bundle.putBoolean("DatosNuevos", true);
 
@@ -236,6 +239,7 @@ public class BuscarClienteFichaServicioFragment extends Fragment {
                         bundle.putInt("minuto", minuto);
                         bundle.putInt("precio", precio);
                         bundle.putString("Comentario", comentario);
+                        bundle.putBoolean("Pago", pago);
                         bundle.putString("Tratamiento", tratamiento);
                         bundle.putInt("MedioPago", medioPago);
                         bundle.putInt("FichaServicioId", FichaServicioId);
