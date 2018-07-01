@@ -35,6 +35,6 @@ public interface FichaServicioDao {
     @Update
     void update(FichaServicio fichaServicio);
 
-    @Query("SELECT * FROM FichaServicio WHERE fecha LIKE :fecha")
+    @Query("SELECT * FROM FichaServicio WHERE fecha LIKE :fecha order by hora")
     LiveData<List<FichaServicio>> getAllFichaServicioByParameters(String fecha);
 }

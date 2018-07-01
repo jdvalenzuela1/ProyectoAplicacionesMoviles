@@ -15,5 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Control Financiero"/>
+        <Button
+            android:id="@+id/CajaDiaria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/holo_red_light"
+            android:textColor="@color/colorAccent"
+            android:text="Caja diaria"
+            android:drawableBottom="@drawable/ic_menu"/>
+        <Button
+            android:id="@+id/CajaMensual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/holo_red_light"
+            android:textColor="@color/colorAccent"
+            android:text="Caja Mensual"
+            android:drawableBottom="@drawable/ic_menu"/>
     </LinearLayout>
 </FrameLayout>

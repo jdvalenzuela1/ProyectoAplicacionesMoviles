@@ -32,7 +32,7 @@ import java.util.Calendar;
  * Created by lenovo on 26-06-2018.
  */
 
-public class NuevaFichaServicioVistaFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class NuevaFichaServicioVistaFragment extends Fragment implements TimePickerDialog.OnTimeSetListener{
     Spinner mediosPago;
     private Button guardarFichaServicio;
     private Button fechayHoraBotonFichaServicio;
@@ -104,8 +104,13 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
             @Override
             public void onClick(View v) {
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), NuevaFichaServicioVistaFragment.this, anio, mes, dia);
-                datePickerDialog.show();
+                Calendar calendarFichaServicio = Calendar.getInstance();
+                hora = calendarFichaServicio.get(Calendar.HOUR_OF_DAY);
+                minuto = calendarFichaServicio.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                        NuevaFichaServicioVistaFragment.this, hora, minuto, DateFormat.is24HourFormat(getActivity().getBaseContext()));
+                timePickerDialog.show();
             }
         });
         buscarCliente.setOnClickListener(new View.OnClickListener() {
@@ -194,23 +199,6 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements DatePic
         });
     }
 
-
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        anio = year;
-        mes = month;
-        dia = dayOfMonth;
-
-        Calendar calendarFichaServicio = Calendar.getInstance();
-        hora = calendarFichaServicio.get(Calendar.HOUR_OF_DAY);
-        minuto = calendarFichaServicio.get(Calendar.MINUTE);
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                NuevaFichaServicioVistaFragment.this, hora, minuto, DateFormat.is24HourFormat(getActivity().getBaseContext()));
-        timePickerDialog.show();
-
-    }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
