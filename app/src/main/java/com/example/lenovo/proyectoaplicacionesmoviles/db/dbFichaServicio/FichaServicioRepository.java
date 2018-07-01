@@ -63,6 +63,15 @@ public class FichaServicioRepository {
         return asyncTask.get();
     }
 
+    public LiveData<List<FichaServicio>> getAllFichaServicioByParametersMonthAndYear(int mes, int anio) throws ExecutionException, InterruptedException {
+        List<Integer> parametros = new ArrayList<Integer>();
+        parametros.add(mes);
+        parametros.add(anio);
+
+        AsyncTask<List<Integer>, Void, LiveData<List<FichaServicio>>> asyncTask = new FichaServicioRepository.getAllFichaServicioByParametersMonthAndYearAsyncTask(mFichaServicioDao).execute(parametros);
+        return asyncTask.get();
+    }
+
     private static class getAllFichaServicioAsyncTask extends AsyncTask<Void, Void, LiveData<List<FichaServicio>>> {
 
         private FichaServicioDao mAsyncTaskDao;
@@ -156,6 +165,24 @@ public class FichaServicioRepository {
             Integer anio = parametros.get(2);
             String fecha_tratamiento = String.format("%02d", dia)+"/"+String.format("%02d", mes)+"/"+String.format("%02d", anio);
             return mAsyncTaskDao.getAllFichaServicioByParameters(fecha_tratamiento);
+        }
+    }
+    public class getAllFichaServicioByParametersMonthAndYearAsyncTask extends AsyncTask<List<Integer>,  Void, LiveData<List<FichaServicio>>> {
+
+        private FichaServicioDao mAsyncTaskDao;
+
+        getAllFichaServicioByParametersMonthAndYearAsyncTask(FichaServicioDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected LiveData<List<FichaServicio>> doInBackground(List<Integer>[] lists) {
+            List<Integer> parametros = new ArrayList<Integer>();
+            parametros = lists[0];
+            Integer mes = parametros.get(0);
+            Integer anio = parametros.get(1);
+            String fecha_tratamiento = "%"+String.format("%02d", mes)+"/"+anio+"%";
+            return mAsyncTaskDao.getAllFichaServicioByParametersMonthAndYear(fecha_tratamiento);
         }
     }
 }

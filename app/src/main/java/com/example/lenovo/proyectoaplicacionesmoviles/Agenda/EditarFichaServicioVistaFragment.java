@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -54,7 +55,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
     private Button actualizarFichaServicio;
     private Button eliminarFichaServicio;
     private int FichaServicioId;
-
+    private CheckBox noPagados;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +83,8 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
         medioPagoFichaServicio = (Spinner) getActivity().findViewById(R.id.MedioPagoFichaServicioEditar);
         comentarioFichaServicio = (EditText) getActivity().findViewById(R.id.ComentarioFichaServicioEditar);
 
+        noPagados = (CheckBox) getActivity().findViewById(R.id.ClientePagoTratamientoId);
+
         Bundle bundle = getArguments();
         FichaServicioId = bundle.getInt("FichaServicioId");
 
@@ -106,6 +109,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
             dia = bundle.getInt("dia");
             hora = bundle.getInt("hora");
             minuto = bundle.getInt("minuto");
+            noPagados.setChecked(bundle.getBoolean("Pago"));
 
             fechayHoraSeleccionadaFichaServicios.setText(dia+"/"+mes+"/"+anio+" "+String.format("%02d", hora) + ":" + String.format("%02d", minuto));
             medioPagoFichaServicio.setSelection(bundle.getInt("MedioPago"));
@@ -119,6 +123,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
             apellidoCliente.setText(bundle.getString("ClienteApellido"));
             tratamientoFichaServicio.setText(fichaServicio.getTratamiento());
             precioFichaServicio.setText(Integer.toString(fichaServicio.getPrecio()));
+            noPagados.setChecked(fichaServicio.getPagado());
             String[] fecha_db = fichaServicio.getFecha().split("/");
             String[] hora_db = fichaServicio.getHora().split(":");
 
@@ -151,6 +156,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                 bundle.putInt("anio", anio);
                 bundle.putInt("mes", mes);
                 bundle.putInt("dia", dia);
+                bundle.putBoolean("Pago", noPagados.isChecked());
                 String precio = precioFichaServicio.getRawText();
                 if (precio.equals("")){
                     bundle.putInt("precio", 0);
@@ -201,6 +207,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                     fichaServicio.setHora(hora_tratamiento);
                     fichaServicio.setTratamiento(tratamiento);
                     fichaServicio.setMedio_pago(MedioPago);
+                    fichaServicio.setPagado(noPagados.isChecked());
                     fichaServicio.setPrecio(precio);
                     fichaServicio.setComentario(comentario);
 

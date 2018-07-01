@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.lenovo.proyectoaplicacionesmoviles.R;
@@ -31,6 +32,7 @@ public class CajaDiariaVistaFragment  extends Fragment {
     private TextView depositoId;
     private TextView chequeId;
     private TextView totalId;
+    int dia, mes, anio;
 
     private FichaServicioViewModel mFichaServicioViewModel;
     private CalendarView calendario;
@@ -58,79 +60,90 @@ public class CajaDiariaVistaFragment  extends Fragment {
         calendario = (CalendarView) getActivity().findViewById(R.id.CalendarViewCajaDiaria);
 
         Calendar FechaActual = Calendar.getInstance();
-        int anio = FechaActual.get(Calendar.YEAR);
-        int mes = FechaActual.get(Calendar.MONTH);
-        int dia = FechaActual.get(Calendar.DAY_OF_MONTH);
+        anio = FechaActual.get(Calendar.YEAR);
+        mes = FechaActual.get(Calendar.MONTH);
+        dia = FechaActual.get(Calendar.DAY_OF_MONTH);
+
+        ActualizarMediosPagoDiaSeleccionado(anio, mes, dia);
+
+        noPagados.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                ActualizarMediosPagoDiaSeleccionado(anio, mes, dia);
+            }
+        });
 
 
         calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
-                mFichaServicioViewModel = ViewModelProviders.of(getActivity()).get(FichaServicioViewModel.class);
-                try {
-                    mFichaServicioViewModel.getAllFichaServicioByParameters(dayOfMonth, month, year).observe(getActivity(), new Observer<List<FichaServicio>>() {
-
-                        @Override
-                        public void onChanged(@Nullable final List<FichaServicio> fichaServicios) {
-                            int efectivo = 0;
-                            int tarjeta = 0;
-                            int deposito = 0;
-                            int cheque = 0;
-
-                            int total = fichaServicios.size();
-
-                            for (int i = 0; i < fichaServicios.size(); i++){
-                                if (noPagados.isChecked()){
-                                    int valor = fichaServicios.get(i).getMedio_pago();
-                                    if (fichaServicios.get(i).getMedio_pago() == 0) {
-                                        efectivo += fichaServicios.get(i).getPrecio();
-                                    } else if (fichaServicios.get(i).getMedio_pago() == 1) {
-                                        tarjeta += fichaServicios.get(i).getPrecio();
-                                    } else if (fichaServicios.get(i).getMedio_pago() == 2) {
-                                        deposito += fichaServicios.get(i).getPrecio();
-                                    } else if (fichaServicios.get(i).getMedio_pago() == 3) {
-                                        cheque += fichaServicios.get(i).getPrecio();
-                                    }
-                                    total = efectivo + tarjeta + deposito + cheque;
-
-                                    efectivoId.setText(efectivo);
-                                    tarjetaId.setText(tarjeta);
-                                    depositoId.setText(deposito);
-                                    chequeId.setText(cheque);
-                                    totalId.setText(total);
-
-                                } else {
-                                    if (fichaServicios.get(i).getPagado()) {
-                                        int valor = fichaServicios.get(i).getMedio_pago();
-                                        if (fichaServicios.get(i).getMedio_pago() == 0) {
-                                            efectivo += fichaServicios.get(i).getPrecio();
-                                        } else if (fichaServicios.get(i).getMedio_pago() == 1) {
-                                            tarjeta += fichaServicios.get(i).getPrecio();
-                                        } else if (fichaServicios.get(i).getMedio_pago() == 2) {
-                                            deposito += fichaServicios.get(i).getPrecio();
-                                        } else if (fichaServicios.get(i).getMedio_pago() == 3) {
-
-                                        }
-                                        total = efectivo + tarjeta + deposito + cheque;
-
-                                        efectivoId.setText(efectivo);
-                                        tarjetaId.setText(tarjeta);
-                                        depositoId.setText(deposito);
-                                        chequeId.setText(cheque);
-                                        totalId.setText(total);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                anio = year;
+                mes = month;
+                dia = dayOfMonth;
+                ActualizarMediosPagoDiaSeleccionado(year, month, dayOfMonth);
             }
         });
 
+    }
+
+    private void ActualizarMediosPagoDiaSeleccionado(int year, int month, int dayOfMonth) {
+        mFichaServicioViewModel = ViewModelProviders.of(getActivity()).get(FichaServicioViewModel.class);
+        try {
+            mFichaServicioViewModel.getAllFichaServicioByParameters(dayOfMonth, month, year).observe(getActivity(), new Observer<List<FichaServicio>>() {
+
+                @Override
+                public void onChanged(@Nullable final List<FichaServicio> fichaServicios) {
+                    int efectivo = 0;
+                    int tarjeta = 0;
+                    int deposito = 0;
+                    int cheque = 0;
+
+                    int total = 0;
+
+
+                    for (int i = 0; i < fichaServicios.size(); i++){
+                        if (noPagados.isChecked()){
+                            FichaServicio fs = fichaServicios.get(i);
+
+                            if (fichaServicios.get(i).getMedio_pago() == 0) {
+                                efectivo += fichaServicios.get(i).getPrecio();
+                            } else if (fichaServicios.get(i).getMedio_pago() == 1) {
+                                tarjeta += fichaServicios.get(i).getPrecio();
+                            } else if (fichaServicios.get(i).getMedio_pago() == 2) {
+                                deposito += fichaServicios.get(i).getPrecio();
+                            } else if (fichaServicios.get(i).getMedio_pago() == 3) {
+                                cheque += fichaServicios.get(i).getPrecio();
+                            }
+                        } else {
+                            if (fichaServicios.get(i).getPagado()) {
+                                if (fichaServicios.get(i).getMedio_pago() == 0) {
+                                    efectivo += fichaServicios.get(i).getPrecio();
+                                } else if (fichaServicios.get(i).getMedio_pago() == 1) {
+                                    tarjeta += fichaServicios.get(i).getPrecio();
+                                } else if (fichaServicios.get(i).getMedio_pago() == 2) {
+                                    deposito += fichaServicios.get(i).getPrecio();
+                                } else if (fichaServicios.get(i).getMedio_pago() == 3) {
+
+                                }
+                            }
+                        }
+                    }
+                    total = efectivo + tarjeta + deposito + cheque;
+
+                    efectivoId.setText("Efectivo: "+Integer.toString(efectivo));
+                    tarjetaId.setText("Tarjeta: "+Integer.toString(tarjeta));
+                    depositoId.setText("Deposito: "+Integer.toString(deposito));
+                    chequeId.setText("Cheque: "+Integer.toString(cheque));
+                    totalId.setText("Total: "+Integer.toString(total));
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
