@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.ControlFinanciero.CajaDiariaVistaFragment"
     android:background="#F08080">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="11dp"
+        android:text="Incluir no pagados"
+        android:textColor="#FFFFFF" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Incluir no pagados"/>
+
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/NoPagadoId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
         <LinearLayout
             android:id="@+id/CalendarioCajaDiaria"
             android:layout_width="match_parent"
@@ -34,26 +41,31 @@
             android:id="@+id/EfectivoId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Efectivo: "/>
+            android:text="Efectivo: "
+            android:textColor="#FFFFFF"/>
         <TextView
             android:id="@+id/TarjetaId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tarjeta: "/>
+            android:text="Tarjeta: "
+            android:textColor="#FFFFFF"/>
         <TextView
             android:id="@+id/DepositoId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Deposito: "/>
+            android:text="Deposito: "
+            android:textColor="#FFFFFF"/>
         <TextView
             android:id="@+id/ChequeId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cheque: "/>
+            android:text="Cheque: "
+            android:textColor="#FFFFFF"/>
         <TextView
             android:id="@+id/TotalId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total: "/>
+            android:text="Total: "
+            android:textColor="#FFFFFF"/>
     </LinearLayout>
-</FrameLayout>
+</RelativeLayout>

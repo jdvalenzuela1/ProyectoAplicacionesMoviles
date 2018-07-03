@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
@@ -81,7 +82,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
 
         final FichaServicioViewModel mFichaServicioViewProvider = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
 
-        buscarCliente = (Button) getActivity().findViewById(R.id.BuscarFichaServicioClienteEditar);
+        FloatingActionButton buscarCliente = getActivity().findViewById(R.id.BuscarFichaServicioClienteEditar);
         nombreCliente = (TextView) getActivity().findViewById(R.id.NombreClienteFichaServicioEditar);
         apellidoCliente = (TextView) getActivity().findViewById(R.id.ApellidoClienteFichaServicioEditar);
         fechayHoraBotonFichaServicio = (Button) getActivity().findViewById(R.id.FechayHoraBotonFichaServicioEditar);
