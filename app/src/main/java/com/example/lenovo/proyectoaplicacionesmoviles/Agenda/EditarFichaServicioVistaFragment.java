@@ -212,8 +212,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                 if (id_cliente != 0 && !tratamiento.equals("")) {
                     // Eliminamos la notificacion anterior
                     NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-                    int id_notificacion_t = finalFichaServicio.getId_notificacion();
-                    notificationManager.cancel(id_notificacion_t);
+                    notificationManager.cancel(Integer.parseInt(Integer.toString(finalFichaServicio.getId_notificacion())));
 
                     // Se obtiene y actualiza la informacion de SharedPreferences
                     SharedPreferences prefs = getActivity().getSharedPreferences("notificaciones", MODE_PRIVATE);
