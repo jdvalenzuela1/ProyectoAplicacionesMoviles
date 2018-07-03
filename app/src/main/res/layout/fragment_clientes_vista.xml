@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Clientes.ClientesVistaFragment"
-    android:background="@android:color/holo_orange_dark">
+    android:background="#F08080">
 
     <LinearLayout
         android:id="@+id/LinearLayoutClienteVista"
@@ -15,37 +15,41 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <TextView
-            android:id="@+id/Clientes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Clientes"/>
+
         <Button
             android:id="@+id/AgregarCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
-            android:drawableBottom="@drawable/ic_menu"/>
+            android:text="Agregar Cliente"
+            />
         <EditText
             android:id="@+id/NombreSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:hint="Nombre"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/ApellidoSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"/>
+            android:hint="Apellido"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/ComentarioSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario"/>
+            android:hint="Comentario"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ClientesRecyclerId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            />
     </LinearLayout>
 </FrameLayout>

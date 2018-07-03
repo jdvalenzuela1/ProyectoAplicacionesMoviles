@@ -4,54 +4,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Clientes.EditarClientesVistaFragment"
-    android:background="@android:color/holo_red_dark">
+    android:background="#F08080">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Editar Cliente"/>
+
         <TextView
             android:id="@+id/FechaCreacionCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha Creacion"/>
+            android:text="Fecha Creacion"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/EditNombreCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:hint="Nombre"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/EditApellidoCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"/>
+            android:hint="Apellido"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/EditEmailCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo Elenctronico"/>
+            android:hint="Correo Elenctronico"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/EditComentarioCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario"/>
+            android:hint="Comentario"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <Button
             android:id="@+id/ActualizarCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
             android:text="Actualizar"
-            android:drawableBottom="@drawable/ic_menu"/>
+            />
         <Button
             android:id="@+id/EliminarCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
-            android:text="Eliminar"
-            android:drawableBottom="@drawable/ic_menu"/>
+            android:text="Eliminar"/>
     </LinearLayout>
 </FrameLayout>

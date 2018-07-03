@@ -12,29 +12,30 @@
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true">
-
-        <TextView
-            android:id="@+id/FichaServicioClientes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Clientes"/>
+        android:focusableInTouchMode="true"
+        android:background="#F08080">
 
         <EditText
             android:id="@+id/FichaServicioNombreBuscador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="FichaServicioNombre"/>
+            android:textColorHint="#FFFFFF"
+            android:hint="Nombre"
+            android:textColor="#FFFFFF"/>
         <EditText
             android:id="@+id/FichaServicioApellidoBuscador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"/>
+            android:textColorHint="#FFFFFF"
+            android:hint="Apellido"
+            android:textColor="#FFFFFF"/>
         <EditText
             android:id="@+id/FichaServicioComentarioBuscador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario"/>
+            android:textColorHint="#FFFFFF"
+            android:hint="Comentario"
+            android:textColor="#FFFFFF"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/FichaServicioClientesRecyclerId"
             android:layout_width="match_parent"
