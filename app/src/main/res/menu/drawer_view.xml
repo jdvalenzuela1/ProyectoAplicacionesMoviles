@@ -12,7 +12,7 @@
             android:title="Clientes" />
         <item
             android:id="@+id/fragmentControlFinancieroVista"
-            android:title="Control Financiero" />
+            android:title="Reportes" />
 
         <item android:title="">
             <menu>

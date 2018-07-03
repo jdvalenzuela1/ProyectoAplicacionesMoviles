@@ -1,8 +1,14 @@
 package com.example.lenovo.proyectoaplicacionesmoviles.Agenda;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +36,9 @@ import com.santalu.maskedittext.MaskEditText;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Context.ALARM_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by lenovo on 30-06-2018.
@@ -182,6 +191,7 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
         actualizarFichaServicio = (Button) getActivity().findViewById(R.id.ActualizarFichaServicio);
         eliminarFichaServicio  = (Button) getActivity().findViewById(R.id.EliminarFichaServicio);
 
+        final FichaServicio finalFichaServicio = fichaServicio;
         actualizarFichaServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,7 +209,20 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                 String comentario = comentarioFichaServicio.getText().toString();
 
                 if (id_cliente != 0 && !tratamiento.equals("")) {
-                    String x = "";
+                    // Eliminamos la notificacion anterior
+                    NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                    int id_notificacion_t = finalFichaServicio.getId_notificacion();
+                    notificationManager.cancel(id_notificacion_t);
+
+                    // Se obtiene y actualiza la informacion de SharedPreferences
+                    SharedPreferences prefs = getActivity().getSharedPreferences("notificaciones", MODE_PRIVATE);
+                    int id_notificacion = prefs.getInt("id_notificacion", 0);
+
+                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("notificaciones", MODE_PRIVATE).edit();
+                    editor.putInt("id_notificacion", id_notificacion+=1);
+                    editor.commit();
+
+                    // Se crea una nueva instancia de ficha de servicio con el mismo id de ficha de servicio
                     FichaServicio fichaServicio = new FichaServicio();
                     fichaServicio.setId_ficha_servicio(FichaServicioId);
                     fichaServicio.setId_cliente(id_cliente);
@@ -211,7 +234,32 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
                     fichaServicio.setPrecio(precio);
                     fichaServicio.setComentario(comentario);
 
+                    // Se integra la informacion de la notificacion
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.YEAR, anio);
+                    cal.set(Calendar.MONTH, mes);
+                    cal.set(Calendar.DAY_OF_MONTH, dia);
+                    cal.set(Calendar.HOUR_OF_DAY, hora);
+                    cal.set(Calendar.MINUTE, minuto);
 
+                    Intent intent = new Intent(getActivity(), Notification_receiver.class);
+                    intent.putExtra("nombreCliente",nombreCliente.getText());
+                    intent.putExtra("apellidoCliente", apellidoCliente.getText());
+                    intent.putExtra("tratamiento", tratamiento);
+                    intent.putExtra("anio", anio);
+                    intent.putExtra("mes", mes);
+                    intent.putExtra("dia", dia);
+                    intent.putExtra("hora", hora);
+                    intent.putExtra("minuto", minuto);
+                    intent.putExtra("id_notificacion", id_notificacion);
+
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), id_notificacion, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent);
+
+
+                    // Se actualiza la ficha de servicio
                     mFichaServicioViewProvider.updateFichaServicio(fichaServicio);
                     Toast.makeText(getActivity(), "Tratamiento actualizado con exito", Toast.LENGTH_LONG).show();
 
@@ -237,6 +285,11 @@ public class EditarFichaServicioVistaFragment  extends Fragment implements DateP
         eliminarFichaServicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Eliminamos la notificacion anterior
+                NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                int id_notificacion = finalFichaServicio.getId_notificacion();
+                notificationManager.cancel(id_notificacion);
+
                 mFichaServicioViewModel.deleteFichaServicioByFichaServicioId(FichaServicioId);
                 Toast.makeText(getActivity(), "Ficha de Servicio eliminada con exito", Toast.LENGTH_LONG).show();
                 Fragment agendaVistaFragment= new AgendaVistaFragment();

@@ -40,6 +40,9 @@ public class FichaServicio {
     @ColumnInfo(name = "pagado")
     private boolean pagado;
 
+    @ColumnInfo(name = "id_notificacion")
+    private int id_notificacion;
+
     public FichaServicio() {
         this.id_cliente = id_cliente;
         this.tratamiento = tratamiento;
@@ -49,6 +52,7 @@ public class FichaServicio {
         this.medio_pago = medio_pago;
         this.comentario = comentario;
         this.pagado = false;
+        this.id_notificacion = id_notificacion;
     }
 
     public int getId_ficha_servicio() {
@@ -122,5 +126,13 @@ public class FichaServicio {
 
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
+    }
+
+    public int getId_notificacion() {
+        return id_notificacion;
+    }
+
+    public void setId_notificacion(int id_notificacion) {
+        this.id_notificacion = id_notificacion;
     }
 }
