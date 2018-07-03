@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Agenda.NuevaFichaServicioVistaFragment"
-    android:background="@android:color/holo_red_dark">
+    android:background="#F08080">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,14 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nueva Ficha de Servicio"/>
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/BuscarFichaServicioCliente"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="@android:color/holo_red_light"
-            android:textColor="@color/colorAccent"
-            android:text="Buscar Cliente"
-            android:drawableBottom="@drawable/ic_menu"/>
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/search_user_icon"
+            android:layout_margin="16dp"
+            />
         <TextView
             android:id="@+id/NombreClienteFichaServicio"
             android:layout_width="match_parent"
@@ -36,24 +36,24 @@
             android:id="@+id/TratamientoFichaServicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tratamiento del cliente"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fecha del Tratamiento: "/>
+            android:hint="Tratamiento del cliente"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <TextView
             android:id="@+id/FechayHoraSeleccionadaFichaServicios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/FechayHoraBotonFichaServicio"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:drawableBottom="@drawable/ic_menu"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar fecha"
+            android:textColor="#ff4081"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Precio del Tratamiento"/>
+            android:text="Precio del Tratamiento"
+            android:textColor="#FFFFFF"/>
         <com.santalu.maskedittext.MaskEditText
             android:id="@+id/PrecioFichaServicio"
             android:layout_width="wrap_content"
@@ -62,7 +62,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Medio de pago"/>
+            android:text="Medio de pago"
+            android:textColor="#FFFFFF"/>
         <Spinner
             android:id="@+id/MedioPagoFichaServicio"
             android:layout_width="match_parent"
@@ -71,7 +72,9 @@
             android:id="@+id/ComentarioFichaServicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario de la Ficha de servicio"/>
+            android:hint="Comentario de la Ficha de servicio"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <Button
             android:id="@+id/GuardarFichaServicio"
             android:layout_width="match_parent"
@@ -79,6 +82,6 @@
             android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
             android:text="Guardar"
-            android:drawableBottom="@drawable/ic_menu"/>
+            />
     </LinearLayout>
 </FrameLayout>

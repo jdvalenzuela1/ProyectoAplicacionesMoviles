@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.ControlFinanciero.ControlFinancieroVistaFragment"
-    android:background="@android:color/holo_purple">
+    android:background="#F08080">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
             android:text="Caja diaria"
-            android:drawableBottom="@drawable/ic_menu"/>
+            />
         <Button
             android:id="@+id/CajaMensual"
             android:layout_width="match_parent"
@@ -30,6 +30,6 @@
             android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
             android:text="Caja Mensual"
-            android:drawableBottom="@drawable/ic_menu"/>
+            />
     </LinearLayout>
 </FrameLayout>

@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -79,7 +80,7 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements TimePic
         final FichaServicioViewModel mFichaServicioViewProvider = ViewModelProviders.of(this).get(FichaServicioViewModel.class);
 
         guardarFichaServicio = (Button) getActivity().findViewById(R.id.GuardarFichaServicio);
-        buscarCliente = (Button) getActivity().findViewById(R.id.BuscarFichaServicioCliente);
+        FloatingActionButton buscarCliente = getActivity().findViewById(R.id.BuscarFichaServicioCliente);
         nombreCliente = (TextView) getActivity().findViewById(R.id.NombreClienteFichaServicio);
         apellidoCliente = (TextView) getActivity().findViewById(R.id.ApellidoClienteFichaServicio);
         fechayHoraBotonFichaServicio = (Button) getActivity().findViewById(R.id.FechayHoraBotonFichaServicio);

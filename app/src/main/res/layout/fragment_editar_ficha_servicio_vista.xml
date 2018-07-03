@@ -80,15 +80,29 @@
             android:hint="Comentario de la Ficha de servicio"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"/>
-        <TextView
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cliente pago tratamiento"
-            android:textColor="#FFFFFF"/>
-        <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/ClientePagoTratamientoId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cliente pago tratamiento"
+                android:textColor="#FFFFFF"
+                android:id="@+id/textView2" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/ClientePagoTratamientoId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView2"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+
         <Button
             android:id="@+id/ActualizarFichaServicio"
             android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lenovo.proyectoaplicacionesmoviles.Clientes.NuevoClienteVistaFragment"
-    android:background="@android:color/holo_red_dark">
+    android:background="#F08080">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,22 +19,30 @@
             android:id="@+id/NombreCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:hint="Nombre"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/ApellidoCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"/>
+            android:hint="Apellido"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/EmailCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo Elenctronico"/>
+            android:hint="Correo Elenctronico"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <EditText
             android:id="@+id/ComentarioCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario"/>
+            android:hint="Comentario"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"/>
         <Button
             android:id="@+id/GuardarCliente"
             android:layout_width="match_parent"
@@ -42,6 +50,6 @@
             android:shadowColor="@android:color/holo_red_light"
             android:textColor="@color/colorAccent"
             android:text="Guardar"
-            android:drawableBottom="@drawable/ic_menu"/>
+            />
     </LinearLayout>
 </FrameLayout>
