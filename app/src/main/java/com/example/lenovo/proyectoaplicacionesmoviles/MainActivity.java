@@ -1,5 +1,6 @@
 package com.example.lenovo.proyectoaplicacionesmoviles;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    public static Context contextOfApplication;
 
     static final int REQUEST_PERMISSION_KEY = 1;
     //LoadAlbum loadAlbumTask;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        contextOfApplication = getApplicationContext();
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
 
 
         Handler handler = new Handler();
@@ -190,6 +194,11 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
+    }
+
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
     }
 }
 
