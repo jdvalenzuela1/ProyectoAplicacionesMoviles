@@ -11,9 +11,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar Ficha de Servicio"/>
+            android:text="Editar ficha de servicio"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/BuscarFichaServicioClienteEditar"

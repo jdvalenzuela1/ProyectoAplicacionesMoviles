@@ -15,6 +15,13 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clientes"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"/>
+
 
         <Button
             android:id="@+id/AgregarCliente"
