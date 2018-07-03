@@ -72,6 +72,12 @@ public class FichaServicioRepository {
         return asyncTask.get();
     }
 
+    public FichaServicio SelectFichaServicioByNotificationId(int id_notificacion) throws ExecutionException, InterruptedException {
+        AsyncTask<Integer, Void, FichaServicio> asyncTask = new FichaServicioRepository.selectFichaServicioByNotificationIdAsyncTask(mFichaServicioDao);
+        FichaServicio fichaServicio = asyncTask.execute(id_notificacion).get();
+        return fichaServicio;
+    }
+
     private static class getAllFichaServicioAsyncTask extends AsyncTask<Void, Void, LiveData<List<FichaServicio>>> {
 
         private FichaServicioDao mAsyncTaskDao;
@@ -99,6 +105,21 @@ public class FichaServicioRepository {
         protected Void doInBackground(final FichaServicio... params) {
             mAsyncTaskDao.insertAll(params);
             return null;
+        }
+    }
+
+    private static class selectFichaServicioByNotificationIdAsyncTask extends AsyncTask<Integer, Void, FichaServicio> {
+
+        private FichaServicioDao mAsyncTaskDao;
+
+        selectFichaServicioByNotificationIdAsyncTask(FichaServicioDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected FichaServicio doInBackground(Integer... integers) {
+            FichaServicio fichaServicio = mAsyncTaskDao.SelectFichaServicioByNotificationId(integers[0]);
+            return fichaServicio;
         }
     }
 

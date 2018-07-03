@@ -46,4 +46,8 @@ public class FichaServicioViewModel extends AndroidViewModel {
     public LiveData<List<FichaServicio>> getAllFichaServicioByParametersMonthAndYear(int mes, int anio) throws ExecutionException, InterruptedException {
         return mRepository.getAllFichaServicioByParametersMonthAndYear(mes, anio);
     }
+
+    public FichaServicio SelectFichaServicioByNotificationId(int id_notificacion) throws ExecutionException, InterruptedException {
+        return mRepository.SelectFichaServicioByNotificationId(id_notificacion);
+    }
 }

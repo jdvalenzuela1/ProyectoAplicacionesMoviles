@@ -205,14 +205,6 @@ public class NuevaFichaServicioVistaFragment extends Fragment implements TimePic
                     cal.set(Calendar.MINUTE, minuto);
 
                     Intent intent = new Intent(getActivity(), Notification_receiver.class);
-                    intent.putExtra("nombreCliente",nombreCliente.getText());
-                    intent.putExtra("apellidoCliente", apellidoCliente.getText());
-                    intent.putExtra("tratamiento", tratamiento);
-                    intent.putExtra("anio", anio);
-                    intent.putExtra("mes", mes);
-                    intent.putExtra("dia", dia);
-                    intent.putExtra("hora", hora);
-                    intent.putExtra("minuto", minuto);
                     intent.putExtra("id_notificacion", id_notificacion);
 
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), id_notificacion, intent, PendingIntent.FLAG_UPDATE_CURRENT);

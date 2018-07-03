@@ -40,4 +40,7 @@ public interface FichaServicioDao {
 
     @Query("SELECT * FROM FichaServicio WHERE fecha LIKE :fecha")
     LiveData<List<FichaServicio>> getAllFichaServicioByParametersMonthAndYear(String fecha);
+
+    @Query("SELECT * FROM FichaServicio WHERE id_notificacion = :id_notificacion")
+    FichaServicio SelectFichaServicioByNotificationId(Integer id_notificacion);
 }
