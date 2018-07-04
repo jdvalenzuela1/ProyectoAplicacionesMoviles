@@ -71,7 +71,7 @@
                 android:layout_alignBaseline="@+id/NoPagadoIdCajaMensual"
                 android:layout_alignBottom="@+id/NoPagadoIdCajaMensual"
                 android:layout_alignParentStart="true"
-                android:text="No pagado: "
+                android:text="Incluir no pagados: "
                 android:textColor="#FFFFFF"/>
 
             <android.support.v7.widget.AppCompatCheckBox

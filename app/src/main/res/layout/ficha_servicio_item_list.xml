@@ -3,26 +3,26 @@
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:orientation="vertical"
-    android:background="#F08080">
-<TextView
-    android:id="@+id/NombreClienteFichaServicioAdapter"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-</TextView>
-<TextView
-    android:id="@+id/ApellidoClienteFichaServicioAdapter"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-</TextView>
-<TextView
-    android:id="@+id/HoraFichaServicioAdapter"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-</TextView>
-<TextView
-    android:id="@+id/TratamientoAdapter"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
-</TextView>
+android:background="#F08080">
+    <TextView
+        android:id="@+id/NombreClienteFichaServicioAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:id="@+id/ApellidoClienteFichaServicioAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:id="@+id/HoraFichaServicioAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        android:id="@+id/TratamientoAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+    </TextView>
 </LinearLayout>

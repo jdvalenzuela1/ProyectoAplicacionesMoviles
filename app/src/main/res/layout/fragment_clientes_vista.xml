@@ -15,6 +15,13 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
+        <TextView
+            android:text="Filtros de busqueda"
+            android:layout_width="match_parent"
+            android:textSize="20dp"
+            android:textColor="@color/ef_white"
+            android:layout_height="wrap_content">
+        </TextView>
 
 
         <EditText
