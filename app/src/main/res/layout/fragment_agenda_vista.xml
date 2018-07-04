@@ -10,12 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agenda principal"
-            android:textSize="30dp"
-            android:textColor="#FFFFFF"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/AgregarFicha"
@@ -24,18 +18,21 @@
             android:layout_gravity="end|bottom"
             android:src="@drawable/plus_icon"
             android:layout_margin="16dp"/>
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/Calendario"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_calen"
             android:gravity="center">
+
             <CalendarView
                 android:id="@+id/CalendarView"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            />
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="#FFFFFF"
+                android:layout_gravity="center" />
+        </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/FichasRecyclerId"
             android:layout_width="match_parent"

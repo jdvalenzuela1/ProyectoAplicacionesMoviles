@@ -14,14 +14,5 @@
             android:id="@+id/fragmentControlFinancieroVista"
             android:title="Reportes" />
 
-        <item android:title="">
-            <menu>
-                <group android:checkableBehavior="single">
-                    <item
-                        android:id="@+id/fragmentConfiguracionVista"
-                        android:title="Configuracion" />
-                </group>
-            </menu>
-        </item>
     </group>
 </menu>

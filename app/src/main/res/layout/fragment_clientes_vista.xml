@@ -15,22 +15,8 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clientes"
-            android:textSize="30dp"
-            android:textColor="#FFFFFF"/>
 
 
-        <Button
-            android:id="@+id/AgregarCliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:shadowColor="@android:color/holo_red_light"
-            android:textColor="@color/colorAccent"
-            android:text="Agregar Cliente"
-            />
         <EditText
             android:id="@+id/NombreSearch"
             android:layout_width="match_parent"
@@ -52,6 +38,14 @@
             android:hint="Comentario"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"/>
+        <Button
+            android:id="@+id/AgregarCliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@android:color/holo_red_light"
+            android:textColor="@color/colorAccent"
+            android:text="Agregar Cliente"
+            />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ClientesRecyclerId"
             android:layout_width="match_parent"

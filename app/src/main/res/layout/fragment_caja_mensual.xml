@@ -12,13 +12,6 @@
         android:orientation="vertical" >
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Caja mensual"
-            android:textSize="30dp"
-            android:textColor="#FFFFFF"/>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -78,7 +71,7 @@
                 android:layout_alignBaseline="@+id/NoPagadoIdCajaMensual"
                 android:layout_alignBottom="@+id/NoPagadoIdCajaMensual"
                 android:layout_alignParentStart="true"
-                android:text="Pagado: "
+                android:text="No pagado: "
                 android:textColor="#FFFFFF"/>
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -86,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="46dp"
+                android:layout_marginStart="19dp"
                 android:layout_toEndOf="@+id/Pagado" />
 
 
